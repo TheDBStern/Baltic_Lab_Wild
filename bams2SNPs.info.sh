@@ -43,4 +43,4 @@ java -ea -Xmx50g -jar <path_to_popoolation2>/mpileup2sync.jar --input lab.base_T
 
 
 ### Filter the sync file to match the SNPs called with poolfstat
- #TBD
+python filter_sync_by_snplist.py -i lab.base_T1_T2.sync -snps lab.base_T1_T2.snpdet -o lab.base_T1_T2.filtered.sync
