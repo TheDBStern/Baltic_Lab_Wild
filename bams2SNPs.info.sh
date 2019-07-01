@@ -32,7 +32,7 @@
 samtools mpileup -q 3 -Q 0 -d 8000 -R -A –B -f Eaff_11172013.genome.masked.fa -b bamfiles.txt -o lab.base_T1_T2.mpileup
 
 ## Generate .vcf and genobaypass files along with pairwise Fst using poolfstat
-varscan mpileup2cns lab.base_T1_T2.mpileup --min-coverage 50 --min-avg-qual 20 --min-reads2 4 --min-var-freq 0.001 --output-vcf 1 --variants > lab.base_T1_T2.vcf
+varscan mpileup2cns lab.base_T1_T2_10.mpileup --min-coverage 50 --min-avg-qual 20 --min-reads2 4 --min-var-freq 0.001 --output-vcf 1 --variants > lab.base_T1_T2.vcf
 
 Rscript vcf2genobaypass.R
 
