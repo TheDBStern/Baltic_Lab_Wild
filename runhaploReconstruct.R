@@ -15,7 +15,7 @@ data_filtered=initialize_SNP_time_series(chr=data$chr, pos=data$pos, base.freq=d
 #default values used for ***put in list of parameters***
 #create list of unique scaffold values, then reconstruct haplotype blocks on each unique scaffold
 Scaff_in_Filt <- data_filtered@col.info
-Scaffolds <- unique(data_filtered$chr)
+Scaffolds <- unique(Scaff_in_Filt$chr)
 Scaffolds <- as.character(Scaffolds)
 data_reconst <- lapply(Scaffolds, function(x) reconstruct_hb(data_filtered, chrom=x))
 
