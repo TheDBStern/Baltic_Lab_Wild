@@ -5,7 +5,7 @@ import sys
 import argparse
 import numpy
 
-parser = argparse.ArgumentParser(description='Script to convert a file from multipopulation BayPass format (refcount1 altcount1 etc.) to frequencies of the ref allele and a coverage matrix')
+parser = argparse.ArgumentParser(description='Script to convert a file from multipopulation BayPass format (refcount1 altcount1 etc.) to frequencies of the alt allele and a coverage matrix')
 parser.add_argument('-i', dest = 'input', type = str, required=True,  help = 'input file')
 parser.add_argument('-freq', dest = 'freqout', type = str, required=True,  help = 'frequency output file')
 parser.add_argument('-cov', dest = 'covout', type = str, required=True,  help = 'covarage output file')
@@ -30,7 +30,7 @@ with open(args.input,'rU') as f:
 			if args.fold:
 				freq = round(min(c1,c2)/tot,3)
 			else:
-				freq = round(c1/tot,3)
+				freq = round(c2/tot,3)
 			freqs.append(str(freq))
 			covs.append(str(tot))
 			pcount +=1
