@@ -14,7 +14,8 @@ windowsize=50000
 
 name = sys.argv[1] # "Scf_2L.varscan"
 #chrom= sys.argv[2] # 2L
-Ne = [1000] * 16
+# Ne estimated from LLS P.planII
+Ne = [1755,2011,1807,2861,2401,1963,2675,2597,1755,2011,1807,2861,2401,1963,2675,2597]
 
 Method="Subtraction" # "Regression"
 
@@ -39,9 +40,8 @@ out1a=open(name+".sig.LRT2.txt", "w")
 out3 =open(name+".p0mean.txt", "w")
 out4 =open(name+".pop.specific.responses.txt", "w")
 pdist=[0 for j in range(101)]
-out5 =open(name+".window.LRT.stats.txt", "w")
 
-m={"F0.BSE3":0,"F0.BSE4":0,"F0.BSE5":0,"F0.BSE6":0,"F0.BSE8":0,"F0.BSE9":0,"F0.BSE11":0,"F0.BSE12":0,"F4.BSE3":0,"F4.BSE4":0,"F4.BSE5":0,"F4.BSE6":0,"F4.BSE8":0,"F4.BSE9":0,"F4.BSE11":0,"F4.BSE12":0}
+m={"F0.BSE3":0,"F0.BSE4":0,"F0.BSE5":0,"F0.BSE6":0,"F0.BSE8":0,"F0.BSE9":0,"F0.BSE11":0,"F0.BSE12":0,"F10.BSE3":0,"F10.BSE4":0,"F10.BSE5":0,"F10.BSE6":0,"F10.BSE8":0,"F10.BSE9":0,"F10.BSE11":0,"F10.BSE12":0}
 p_crit=1.0/1000.0
 g_snps=0
 LRT=[]
@@ -71,11 +71,11 @@ for line_idx, line in enumerate(src):
 	for j in range(16):
 		key = cols[j*3+2]
 		m[key]=float(cols[j*3+3])		
-		strx+=('\t'+cols[j*3+2]+'\t'+cols[j*3+3]+'\t'+cols[j*3+4])
+		#strx+=('\t'+cols[j*3+2]+'\t'+cols[j*3+3]+'\t'+cols[j*3+4])
 
 
 	dz=[float(cols[50])-float(cols[58]),float(cols[51])-float(cols[59]),float(cols[52])-float(cols[60]),float(cols[53])-float(cols[61]),float(cols[54])-float(cols[62]),float(cols[55])-float(cols[63]),float(cols[56])-float(cols[64]),float(cols[37])-float(cols[65])]
-	vz=[vn[0]+1.0/m["F0.BSE3"]+1.0/m["F4.BSE3"],vn[1]+1.0/m["F0.BSE4"]+1.0/m["F4.BSE4"],vn[2]+1.0/m["F0.BSE5"]+1.0/m["F4.BSE5"],vn[3]+1.0/m["F0.BSE6"]+1.0/m["F4.BSE6"],vn[4]+1.0/m["F0.BSE8"]+1.0/m["F4.BSE8"],vn[5]+1.0/m["F0.BSE9"]+1.0/m["F4.BSE9"],vn[6]+1.0/m["F0.BSE11"]+1.0/m["F4.BSE11"],vn[7]+1.0/m["F0.BSE12"]+1.0/m["F4.BSE12"]]
+	vz=[vn[0]+1.0/m["F0.BSE3"]+1.0/m["F10.BSE3"],vn[1]+1.0/m["F0.BSE4"]+1.0/m["F10.BSE4"],vn[2]+1.0/m["F0.BSE5"]+1.0/m["F10.BSE5"],vn[3]+1.0/m["F0.BSE6"]+1.0/m["F10.BSE6"],vn[4]+1.0/m["F0.BSE8"]+1.0/m["F10.BSE8"],vn[5]+1.0/m["F0.BSE9"]+1.0/m["F10.BSE9"],vn[6]+1.0/m["F0.BSE11"]+1.0/m["F10.BSE11"],vn[7]+1.0/m["F0.BSE12"]+1.0/m["F10.BSE12"]]
 
 
 	w=[1.0/vz[0],1.0/vz[1],1.0/vz[2],1.0/vz[3],1.0/vz[4],1.0/vz[5],1.0/vz[6],1.0/vz[7]]
@@ -108,8 +108,8 @@ for line_idx, line in enumerate(src):
 		vax=10
 	LRT2dist[vax]+=1
 	tail2=1.0-chi2.cdf(lrt2, 2) # correct
-	out2.write('\t'+str(lrt2)+'\t'+str(tail2)+'\t'+str(dz0)+'\t'+str(dz[0])+'\t'+str(vz[0])+'\t'+str(dz[1])+'\t'+str(vz[1])+'\t'+str(dz[2])+'\t'+str(vz[2])+'\t'+str(dz[3])+'\t'+str(vz[3])+'\t'+str(dz[4])+'\t'+str(vz[4])+'\t'+str(dz[5])+'\t'+str(vz[5])+'\t'+str(dz[6])+'\t'+str(vz[6])+'\t'+str(dz[7])+'\t'+str(vz[7])+'\n')
-	out4.write(strx+'\t'+str(lrt)+'\t'+str(dz[0]/sqrt(vz[0]))+'\t'+str(dz[1]/sqrt(vz[1]))+'\t'+str(dz[2]/sqrt(vz[2]))+'\t'+str(dz[3]/sqrt(vz[3]))+'\t'+str(dz[4]/sqrt(vz[4]))+'\t'+str(dz[5]/sqrt(vz[5]))+'\t'+str(dz[6]/sqrt(vz[6]))+'\t'+str(dz[7]/sqrt(vz[7]))+'\n')
+	out2.write('\t'+str(lrt2)+'\t'+str(tail2)+'\n')#+'\t'+str(dz0)+'\t'+str(dz[0])+'\t'+str(vz[0])+'\t'+str(dz[1])+'\t'+str(vz[1])+'\t'+str(dz[2])+'\t'+str(vz[2])+'\t'+str(dz[3])+'\t'+str(vz[3])+'\t'+str(dz[4])+'\t'+str(vz[4])+'\t'+str(dz[5])+'\t'+str(vz[5])+'\t'+str(dz[6])+'\t'+str(vz[6])+'\t'+str(dz[7])+'\t'+str(vz[7])+'\n')
+	out4.write(strx+'\t'+str(lrt)+'\n')#+'\t'+str(dz[0]/sqrt(vz[0]))+'\t'+str(dz[1]/sqrt(vz[1]))+'\t'+str(dz[2]/sqrt(vz[2]))+'\t'+str(dz[3]/sqrt(vz[3]))+'\t'+str(dz[4]/sqrt(vz[4]))+'\t'+str(dz[5]/sqrt(vz[5]))+'\t'+str(dz[6]/sqrt(vz[6]))+'\t'+str(dz[7]/sqrt(vz[7]))+'\n')
 
 	if tail < p_crit:
 		out1.write(strx+'\t'+str(lrt)+'\t'+str(tail)+'\t'+str(dz0)+'\t'+str(dz[0])+'\t'+str(dz[1])+'\t'+str(dz[2])+'\t'+str(dz[3])+'\t'+str(dz[4])+'\t'+str(dz[5])+'\t'+str(dz[6])+'\t'+str(dz[7])+'\n')
@@ -148,7 +148,7 @@ for j in range(101):
 
 print "total test ",g_snps
 
-for j in range(11):
+for j in range(51):
 	print "LRT range ",10*j,LRT1dist[j],LRT2dist[j]
 
 
