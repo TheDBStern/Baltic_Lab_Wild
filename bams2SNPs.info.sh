@@ -32,7 +32,7 @@
 samtools mpileup -q 3 -Q 0 -d 8000 -R -A –B -f Eaff_11172013.genome.masked.fa -b bamfiles.txt -o lab.base_T1_T2.mpileup
 
 ## Generate .vcf and genobaypass files along with pairwise Fst using poolfstat
-varscan mpileup2cns lab.base_T1_T2_10.mpileup --min-coverage 50 --min-avg-qual 20 --min-reads2 4 --min-var-freq 0.001 --output-vcf 1 --variants > lab.base_T1_T2.vcf
+varscan mpileup2cns lab.base_T1_T2_10.mpileup --p-value 0.99 --min-coverage 50 --min-avg-qual 20 --min-reads2 4 --min-var-freq 0.001 --output-vcf 1 --variants > lab.base_T1_T2.vcf
 
 ## max depth per pop is based on overall 99% - 99.9% read count distribution (calculate_coverage_distribution_sync.py)
 Rscript vcf2genobaypass.R
