@@ -1,8 +1,8 @@
 ## Commands to tile poolseq reads on top of transcriptome and assemble with Trinity in two iterations
 
 # randomly sample 50 million (or more) read pairs from pool-seq files. Required to limit reads based on max memory available during the "extract the 'right' reads step"
-cat *_R1_trimmed.fastq | seqtk sample -s100 - 50000000 > poolSeq50M_R1.fastq
-cat *_R2_trimmed.fastq | seqtk sample -s100 - 50000000 > poolSeq50M_R2.fastq
+cat *_R1_trimmed.fastq.gz | seqtk sample -s100 - 50000000 > poolSeq50M_R1.fastq
+cat *_R2_trimmed.fastq.gz | seqtk sample -s100 - 50000000 > poolSeq50M_R2.fastq
 
 # fix the read names for Trinity
 awk '{{print (NR%4 == 1) ? "@1_" ++i "/1": $0}}' poolSeq50M_R1.fastq > poolSeq50M_R1.fix.fastq
