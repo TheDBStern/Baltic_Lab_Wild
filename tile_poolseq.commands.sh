@@ -42,4 +42,4 @@ makeblastdb -in Eaff_11172013.genome.masked.fa -dbtype nucl -parse_seqids
 blastn -db Eaff_11172013.genome.masked.fa -query Iteration_2.trinity.Trinity.cdhit95.fasta -num_threads 8 -evalue 1e-3 -outfmt6 -out Iteration_2.cdhit95.blastn.eaffi5k_masked.outfmt6
 
 # extract contigs with significant hits
-python filter_fast_by_blast.py -i Iteration_2.trinity.Trinity.cdhit95.fasta -o Iteration_2.trinity.Trinity.cdhit95.filtered.fasta -b Iteration_2.cdhit95.blastn.eaffi5k_masked.outfmt6 -e 1e-3
+python filter_fasta_by_blast.py -i Iteration_2.trinity.Trinity.cdhit95.fasta -o Iteration_2.trinity.Trinity.cdhit95.filtered.fasta -b Iteration_2.cdhit95.blastn.eaffi5k_masked.outfmt6 -e 1e-3
