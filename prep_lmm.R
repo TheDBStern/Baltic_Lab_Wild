@@ -2,9 +2,9 @@ library(data.table)
 library(dplyr)
 
 # read in data
-genoF <- read.table("genobaypass_lab_sync_freq", h=F, stringsAsFactors=F)
+genoF <- read.table("genobaypass_lab_freq", h=F, stringsAsFactors=F)
 genoF$SNP<- 1:nrow(genoF)
-genoF_cov <- read.table("genobaypass_lab_sync_cov", h=F, stringsAsFactors=F)
+genoF_cov <- read.table("genobaypass_lab_cov", h=F, stringsAsFactors=F)
 
 ## calculate divergence from ancestor using Kelly and Hughes 2019 angular transformation
 data=select(genoF, V1,V2)
@@ -42,8 +42,8 @@ mutate(V28= 2*asin(sqrt(V28))-Ancestral)
 genoF<-select(genoF,3:29)
 MgenoF<-melt(genoF, id.vars ="SNP")
 MgenoF$variable<-as.character(MgenoF$variable)
-MgenoF$Generation<-rep(NA,nrow(genoF))
-MgenoF$Treat<-rep(NA,nrow(genoF))
+MgenoF$Generation<-rep(NA,nrow(MgenoF))
+MgenoF$Treat<-rep(NA,nrow(MgenoF))
 MgenoF<- MgenoF %>% 
   mutate(variable = replace(variable, variable=="V3", "Control20")) %>% 
   mutate(variable = replace(variable, variable=="V4", "Control20")) %>% 
