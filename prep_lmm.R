@@ -2,9 +2,9 @@ library(data.table)
 library(dplyr)
 
 # read in data
-genoF <- read.table("genobaypass_lab_freq", h=F, stringsAsFactors=F)
+genoF <- as.data.table(read.table("genobaypass_lab_sync_freq", h=F, stringsAsFactors=F))
 genoF$SNP<- 1:nrow(genoF)
-genoF_cov <- read.table("genobaypass_lab_cov", h=F, stringsAsFactors=F)
+genoF_cov <- as.data.table(read.table("genobaypass_lab_sync_cov", h=F, stringsAsFactors=F))
 
 ## calculate divergence from ancestor using Kelly and Hughes 2019 angular transformation
 data=select(genoF, V1,V2)
@@ -39,6 +39,7 @@ mutate(V27= 2*asin(sqrt(V27))-Ancestral)%>%
 mutate(V28= 2*asin(sqrt(V28))-Ancestral)
 
 ## reformat
+setDT(genoF)
 genoF<-select(genoF,3:29)
 MgenoF<-melt(genoF, id.vars ="SNP")
 MgenoF$variable<-as.character(MgenoF$variable)
@@ -79,6 +80,7 @@ MgenoF<- MgenoF %>%
 
 ## Adding coverage of each
 cov<-select(genoF_cov,3:28)
+setDT(cov)
 cov<-melt(cov)
 MgenoF$Coverage <- cov$value
 
