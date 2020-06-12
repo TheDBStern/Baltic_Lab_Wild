@@ -16,7 +16,7 @@ popnames = c("BSE-0","BSE-0B",
 			"BSE-12-T1","BSE-12-T2")
 
 dat <- vcf2pooldata(vcf.file="lab.vcf",poolsizes=c(200,rep(100,20)),
-			poolnames=popnames,min.cov.per.pool = 10,max.cov.per.pool=300,min.maf=0.01,nlines.per.readblock=1000000)
+			poolnames=popnames,min.cov.per.pool = 10,max.cov.per.pool=200,min.maf=0.01,nlines.per.readblock=1000000)
 		
 saveRDS(dat,"pooldat.RDS")
 

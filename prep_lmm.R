@@ -2,9 +2,9 @@ library(data.table)
 library(dplyr)
 
 # read in data
-genoF <- as.data.table(read.table("genobaypass_lab_sync_freq", h=F, stringsAsFactors=F))
+genoF <- as.data.table(read.table("lab.genobaypass_freq", h=F, stringsAsFactors=F))
 genoF$SNP<- 1:nrow(genoF)
-genoF_cov <- as.data.table(read.table("genobaypass_lab_sync_cov", h=F, stringsAsFactors=F))
+genoF_cov <- as.data.table(read.table("lab.genobaypass_cov", h=F, stringsAsFactors=F))
 
 ## calculate divergence from ancestor using Kelly and Hughes 2019 angular transformation
 data=select(genoF, V1,V2)

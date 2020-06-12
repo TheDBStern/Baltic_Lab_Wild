@@ -9,9 +9,9 @@ nb_gen <- length(g)  #number generations
 gen <- rep(g, nb_repl)
 repl <- rep(rep, each = nb_gen)
 
-freqs <- read.table("../genobaypass_lab_freq",h=F)
-covs <- read.table("../genobaypass_lab_cov",h=F)
-snpdet <- read.table("../snpdet_lab",h=F)
+freqs <- read.table("../lab.genobaypass_freq",h=F)
+covs <- read.table("../lab.genobaypass_cov",h=F)
+snpdet <- read.table("../lab.snpdet",h=F)
 
 nb <- nrow(freqs)
 data <- data.frame(chr = snpdet[,1], code = paste(snpdet[,2], snpdet[,3], snpdet[,4], sep = "_"), 
@@ -42,6 +42,6 @@ data <- cbind(data, data.frame(x.F0.BSE3 = 2 * asin(sqrt(data$freq.F0.BSE3)),
                                  x.F10.BSE6 = 2 * asin(sqrt(data$freq.F10.BSE6)), x.F10.BSE8 = 2 * asin(sqrt(data$freq.F10.BSE8)), 
                                  x.F10.BSE9 = 2 * asin(sqrt(data$freq.F10.BSE9)), x.F10.BSE11 = 2 * asin(sqrt(data$freq.F10.BSE11)), 
                                  x.F10.BSE12 = 2 * asin(sqrt(data$freq.F10.BSE12))))
-write.table(data, "lab.z.stats.all.txt",
+write.table(data, "lab.T0_T2.sel.z.stats.all.txt",
               sep = "\t", col.names = F, row.names = F, quote = F)
 
