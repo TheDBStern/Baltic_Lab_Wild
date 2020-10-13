@@ -26,8 +26,8 @@ calc_jaccard_ind_sims <- function(simdat,afc){
 	BSE11_10 <- c()
 	BSE12_6 <- c()
 	BSE12_10 <- c()
-	
-	
+
+
 	for (i in 1:length(unique(sig_simdat$SNP))){
 		snpnum <- unique(sig_simdat$SNP)[i]
 		#print(snpnum)
@@ -106,13 +106,13 @@ calc_jaccard_ind_sims <- function(simdat,afc){
 			BSE12_10 <- c(BSE12_10,dt$SNP[1])
 			}
 		}
-	
+
 	gen6_pops <- list(BSE3_6,BSE4_6,BSE5_6,BSE6_6,BSE7_6,BSE8_6,BSE9_6,BSE10_6,BSE11_6,BSE12_6)
 	gen10_pops <- list(BSE3_10,BSE4_10,BSE5_10,BSE6_10,BSE7_10,BSE8_10,BSE9_10,BSE10_10,BSE11_10,BSE12_10)
-	
+
 	gen6_jac <- c()
 	gen10_jac <- c()
-	
+
 	for (pop1 in 1:10){
 		for (pop2 in 1:10){
 			if (pop1 != pop2){
@@ -121,8 +121,8 @@ calc_jaccard_ind_sims <- function(simdat,afc){
 				}
 			}
 		}
-	
-	
+
+
 	for (pop1 in 1:10){
 		for (pop2 in 1:10){
 			if (pop1 != pop2){
@@ -131,10 +131,10 @@ calc_jaccard_ind_sims <- function(simdat,afc){
 				}
 			}
 		}
-	
+
 	gen6_jac_sim <- gen6_jac
 	gen10_jac_sim <- gen10_jac
-	
+
 	return(list(gen6_jac,gen10_jac))
 }
 
@@ -159,8 +159,8 @@ calc_jaccard_qt_sims <- function(simdat,afc){
 	Rep9_10 <- c()
 	Rep10_6 <- c()
 	Rep10_10 <- c()
-	
-	
+
+
 	for (i in 1:max(simdat$snp_id)){
 		#print(i)
 		dt <- filter(simdat,snp_id==i)
@@ -231,13 +231,13 @@ calc_jaccard_qt_sims <- function(simdat,afc){
 			Rep10_10 <- c(Rep10_10,dt$snp_id[1])
 			}
 		}
-	
+
 	gen6_pops <- list(Rep1_6,Rep2_6,Rep3_6,Rep4_6,Rep5_6,Rep6_6,Rep7_6,Rep8_6,Rep9_6,Rep10_6)
 	gen10_pops <- list(Rep1_10,Rep2_10,Rep3_10,Rep4_10,Rep5_10,Rep6_10,Rep7_10,Rep8_10,Rep9_10,Rep10_10)
-	
+
 	gen6_jac <- c()
 	gen10_jac <- c()
-	
+
 	for (pop1 in 1:10){
 		for (pop2 in 1:10){
 			if (pop1 != pop2){
@@ -246,8 +246,8 @@ calc_jaccard_qt_sims <- function(simdat,afc){
 				}
 			}
 		}
-	
-	
+
+
 	for (pop1 in 1:10){
 		for (pop2 in 1:10){
 			if (pop1 != pop2){
@@ -256,7 +256,7 @@ calc_jaccard_qt_sims <- function(simdat,afc){
 				}
 			}
 		}
-	
+
 	return(list(gen6_jac,gen10_jac))
 }
 
@@ -279,8 +279,8 @@ calc_jaccard_emp <- function(sig_dat,afc){
 	BSE11_10 <- c()
 	BSE12_6 <- c()
 	BSE12_10 <- c()
-	
-	
+
+
 	for (i in 1:length(unique(sig_dat$SNP))){
 		snpnum <- unique(sig_dat$SNP)[i]
 		print(snpnum)
@@ -347,13 +347,13 @@ calc_jaccard_emp <- function(sig_dat,afc){
 			BSE12_10 <- c(BSE12_10,dt$SNP[1])
 			}
 		}
-	
+
 	gen6_pops <- list(BSE3_6,BSE4_6,BSE5_6,BSE6_6,BSE7_6,BSE8_6,BSE9_6,BSE10_6,BSE11_6,BSE12_6)
 	gen10_pops <- list(BSE3_10,BSE4_10,BSE5_10,BSE6_10,BSE8_10,BSE9_10,BSE11_10,BSE12_10)
-	
+
 	gen6_jac <- c()
 	gen10_jac <- c()
-	
+
 	for (pop1 in 1:10){
 		for (pop2 in 1:10){
 			if (pop1 != pop2){
@@ -362,8 +362,8 @@ calc_jaccard_emp <- function(sig_dat,afc){
 				}
 			}
 		}
-	
-	
+
+
 	for (pop1 in 1:8){
 		for (pop2 in 1:8){
 			if (pop1 != pop2){
@@ -372,14 +372,14 @@ calc_jaccard_emp <- function(sig_dat,afc){
 				}
 			}
 		}
-		
+
 	return(list(gen6_jac,gen10_jac))
 }
 
 rfs_empirical <- function(sig_dat, afc){
 	prop_pop6 <- c()
 	prop_pop10 <- c()
-	
+
 	for (i in 1:length(unique(sig_dat$SNP))){
 		snpnum <- unique(sig_dat$SNP)[i]
 		#print(snpnum)
@@ -402,7 +402,7 @@ rfs_empirical <- function(sig_dat, afc){
 			prop_pop10 <- c(prop_pop10,length(gen10_pos)/8)
 			} else{
 			prop_pop10 <- c(prop_pop10,length(gen10_neg)/8)
-			}	
+			}
 		}
 	return(list(prop_pop6,prop_pop10))
 }
@@ -410,7 +410,7 @@ rfs_empirical <- function(sig_dat, afc){
 rfs_ind_sims <- function(sig_simdat, afc){
 	prop_pop6_sim <- c()
 	prop_pop10_sim <- c()
-	
+
 	for (i in 1:length(unique(sig_simdat$SNP))){
 		snpnum <- unique(sig_simdat$SNP)[i]
 		#print(snpnum)
@@ -441,7 +441,7 @@ rfs_ind_sims <- function(sig_simdat, afc){
 			prop_pop10_sim <- c(prop_pop10_sim,length(gen10_pos)/10)
 			} else{
 			prop_pop10_sim <- c(prop_pop10_sim,length(gen10_neg)/10)
-			}	
+			}
 		}
 	return(list(prop_pop6_sim,prop_pop10_sim))
 }
@@ -449,21 +449,208 @@ rfs_ind_sims <- function(sig_simdat, afc){
 rfs_qt_sims <- function(sig_simdat, afc){
 	prop_pop6_sim <- c()
 	prop_pop10_sim <- c()
-	
+
 	for (i in 1:max(sig_simdat$snp_id)){
 		#print(i)
 		dt <- filter(simdat,snp_id==i)
 		anc <- filter(dt, replicate==1 & generation==0)$frequency
 		gen6 <- filter(dt, generation==6)$frequency - anc
 		gen10 <- filter(dt, generation==10)$frequency - anc
-	  	afchange <- afc
-	  	#gen6
-	  	gen6_pos <- gen6[gen6 >=afchange]
+	  afchange <- afc
+	 	#gen6
+	  gen6_pos <- gen6[gen6 >=afchange]
 		prop_pop6_sim <- c(prop_pop6_sim,length(gen6_pos)/10)
 		##gen10
 		gen10_pos <- gen10[gen10 >=afchange]
 		prop_pop10_sim <- c(prop_pop10_sim,length(gen10_pos)/10)
 		}
-		
+
 	return(list(prop_pop6_sim,prop_pop10_sim))
+}
+
+calc_num_sel_loci <- function(sig_dat,afc){
+	#for each replicate, calculate number of loci with frequency change above min afc
+	BSE3_6 <- c()
+	BSE3_10 <- c()
+	BSE4_6 <- c()
+	BSE4_10 <- c()
+	BSE5_6 <- c()
+	BSE5_10 <- c()
+	BSE6_6 <- c()
+	BSE6_10 <- c()
+	BSE7_6 <- c()
+	BSE8_6 <- c()
+	BSE8_10 <- c()
+	BSE9_6 <- c()
+	BSE9_10 <- c()
+	BSE10_6 <- c()
+	BSE11_6 <- c()
+	BSE11_10 <- c()
+	BSE12_6 <- c()
+	BSE12_10 <- c()
+
+
+	for (i in 1:length(unique(sig_dat$SNP))){
+		snpnum <- unique(sig_dat$SNP)[i]
+		print(snpnum)
+		dt <- filter(sig_dat,SNP==snpnum)
+		#dt <- sig_dat[which(sig_dat$SNP==snpnum)]
+		gen6 <- filter(dt, Treat=="Treatment" & Generation==6)$value
+		gen10 <- filter(dt, Treat=="Treatment" & Generation==10)$value
+		meanafc <- dt$selCoef[[1]]
+		minafc <- afc
+		##gen6
+		if (meanafc*gen6[1]>0 & abs(gen6[1])>minafc){
+			BSE3_6 <- c(BSE3_6,dt$SNP[1])
+			}
+		if (meanafc*gen6[2]>0 & abs(gen6[2])>minafc){
+			BSE4_6 <- c(BSE4_6,dt$SNP[1])
+			}
+		if (meanafc*gen6[3]>0 & abs(gen6[3])>minafc){
+			BSE5_6 <- c(BSE5_6,dt$SNP[1])
+			}
+		if (meanafc*gen6[4]>0 & abs(gen6[4])>minafc){
+			BSE6_6 <- c(BSE6_6,dt$SNP[1])
+			}
+		if (meanafc*gen6[5]>0 & abs(gen6[5])>minafc){
+			BSE7_6 <- c(BSE7_6,dt$SNP[1])
+			}
+		if (meanafc*gen6[6]>0 & abs(gen6[6])>minafc){
+			BSE8_6 <- c(BSE8_6,dt$SNP[1])
+			}
+		if (meanafc*gen6[7]>0 & abs(gen6[7])>minafc){
+			BSE9_6 <- c(BSE9_6,dt$SNP[1])
+			}
+		if (meanafc*gen6[8]>0 & abs(gen6[8])>minafc){
+			BSE10_6 <- c(BSE10_6,dt$SNP[1])
+			}
+		if (meanafc*gen6[9]>0 & abs(gen6[9])>minafc){
+			BSE11_6 <- c(BSE11_6,dt$SNP[1])
+			}
+		if (meanafc*gen6[10]>0 & abs(gen6[10])>minafc){
+			BSE12_6 <- c(BSE12_6,dt$SNP[1])
+			}
+		##gen10
+		if (meanafc*gen10[1]>0 & abs(gen10[1])>minafc){
+			BSE3_10 <- c(BSE3_10,dt$SNP[1])
+			}
+		if (meanafc*gen10[2]>0 & abs(gen10[2])>minafc){
+			BSE4_10 <- c(BSE4_10,dt$SNP[1])
+			}
+		if (meanafc*gen10[3]>0 & abs(gen10[3])>minafc){
+			BSE5_10 <- c(BSE5_10,dt$SNP[1])
+			}
+		if (meanafc*gen10[4]>0 & abs(gen10[4])>minafc){
+			BSE6_10 <- c(BSE6_10,dt$SNP[1])
+			}
+		if (meanafc*gen10[5]>0 & abs(gen10[5])>minafc){
+			BSE8_10 <- c(BSE8_10,dt$SNP[1])
+			}
+		if (meanafc*gen10[6]>0 & abs(gen10[6])>minafc){
+			BSE9_10 <- c(BSE9_10,dt$SNP[1])
+			}
+		if (meanafc*gen10[7]>0 & abs(gen10[7])>minafc){
+			BSE11_10 <- c(BSE11_10,dt$SNP[1])
+			}
+		if (meanafc*gen10[8]>0 & abs(gen10[8])>minafc){
+			BSE12_10 <- c(BSE12_10,dt$SNP[1])
+			}
+		}
+
+	gen6_pops <- list(BSE3_6,BSE4_6,BSE5_6,BSE6_6,BSE7_6,BSE8_6,BSE9_6,BSE10_6,BSE11_6,BSE12_6)
+	gen10_pops <- list(BSE3_10,BSE4_10,BSE5_10,BSE6_10,BSE8_10,BSE9_10,BSE11_10,BSE12_10)
+
+	gen6_nloci <- lapply(gen6_pops, length)
+	gen10_nloci <- lapply(gen10_pops, length)
+	return(list(gen6_nloci,gen10_nloci))
+}
+
+jaccard_redundant <- function(nloci){
+	#nloci is the list of num loci generated with calc_num_sel_loci
+	loc_nums <- 1:1156
+	BSE3_6 <- sample(loc_nums,nloci[[1]][[1]])
+	BSE4_6 <- sample(loc_nums,nloci[[1]][[2]])
+	BSE5_6 <- sample(loc_nums,nloci[[1]][[3]])
+	BSE6_6 <- sample(loc_nums,nloci[[1]][[4]])
+	BSE7_6 <- sample(loc_nums,nloci[[1]][[5]])
+	BSE8_6 <- sample(loc_nums,nloci[[1]][[6]])
+	BSE9_6 <- sample(loc_nums,nloci[[1]][[7]])
+	BSE10_6 <- sample(loc_nums,nloci[[1]][[8]])
+	BSE11_6 <- sample(loc_nums,nloci[[1]][[9]])
+	BSE12_6 <- sample(loc_nums,nloci[[1]][[10]])
+
+	BSE3_10 <- sample(loc_nums,nloci[[2]][[1]])
+	BSE4_10 <- sample(loc_nums,nloci[[2]][[2]])
+	BSE5_10 <- sample(loc_nums,nloci[[2]][[3]])
+	BSE6_10 <- sample(loc_nums,nloci[[2]][[4]])
+	BSE8_10 <- sample(loc_nums,nloci[[2]][[5]])
+	BSE9_10 <- sample(loc_nums,nloci[[2]][[6]])
+	BSE11_10 <- sample(loc_nums,nloci[[2]][[7]])
+	BSE12_10 <- sample(loc_nums,nloci[[2]][[8]])
+
+	gen6_pops <- list(BSE3_6,BSE4_6,BSE5_6,BSE6_6,BSE7_6,BSE8_6,BSE9_6,BSE10_6,BSE11_6,BSE12_6)
+	gen10_pops <- list(BSE3_10,BSE4_10,BSE5_10,BSE6_10,BSE8_10,BSE9_10,BSE11_10,BSE12_10)
+
+	gen6_jac <- c()
+	gen10_jac <- c()
+
+	for (pop1 in 1:10){
+		for (pop2 in 1:10){
+			if (pop1 != pop2){
+				jac <- length(intersect(gen6_pops[[pop1]],gen6_pops[[pop2]])) / length(union(gen6_pops[[pop1]],gen6_pops[[pop2]]))
+				gen6_jac <- c(gen6_jac,jac)
+				}
+			}
+		}
+
+
+	for (pop1 in 1:8){
+		for (pop2 in 1:8){
+			if (pop1 != pop2){
+				jac <- length(intersect(gen10_pops[[pop1]],gen10_pops[[pop2]])) / length(union(gen10_pops[[pop1]],gen10_pops[[pop2]]))
+				gen10_jac <- c(gen10_jac,jac)
+				}
+			}
+		}
+
+	return(list(gen6_jac,gen10_jac))
+
+}
+
+rfs_redundant <- function(nloci){
+	prop_pop6 <- c()
+	prop_pop10 <- c()
+
+	loc_nums <- 1:1156
+	BSE3_6 <- sample(loc_nums,nloci[[1]][[1]])
+	BSE4_6 <- sample(loc_nums,nloci[[1]][[2]])
+	BSE5_6 <- sample(loc_nums,nloci[[1]][[3]])
+	BSE6_6 <- sample(loc_nums,nloci[[1]][[4]])
+	BSE7_6 <- sample(loc_nums,nloci[[1]][[5]])
+	BSE8_6 <- sample(loc_nums,nloci[[1]][[6]])
+	BSE9_6 <- sample(loc_nums,nloci[[1]][[7]])
+	BSE10_6 <- sample(loc_nums,nloci[[1]][[8]])
+	BSE11_6 <- sample(loc_nums,nloci[[1]][[9]])
+	BSE12_6 <- sample(loc_nums,nloci[[1]][[10]])
+
+	BSE3_10 <- sample(loc_nums,nloci[[2]][[1]])
+	BSE4_10 <- sample(loc_nums,nloci[[2]][[2]])
+	BSE5_10 <- sample(loc_nums,nloci[[2]][[3]])
+	BSE6_10 <- sample(loc_nums,nloci[[2]][[4]])
+	BSE8_10 <- sample(loc_nums,nloci[[2]][[5]])
+	BSE9_10 <- sample(loc_nums,nloci[[2]][[6]])
+	BSE11_10 <- sample(loc_nums,nloci[[2]][[7]])
+	BSE12_10 <- sample(loc_nums,nloci[[2]][[8]])
+
+	gen6_pops <- list(BSE3_6,BSE4_6,BSE5_6,BSE6_6,BSE7_6,BSE8_6,BSE9_6,BSE10_6,BSE11_6,BSE12_6)
+	gen10_pops <- list(BSE3_10,BSE4_10,BSE5_10,BSE6_10,BSE8_10,BSE9_10,BSE11_10,BSE12_10)
+
+	for (i in 1:1156){
+		gen6 <- unlist(lapply(gen6_pops, function(x) i %in% x))
+		prop_pop6 <- c(prop_pop6,length(gen6[gen6])/10)
+		gen10 <- unlist(lapply(gen10_pops, function(x) i %in% x))
+		prop_pop10 <- c(prop_pop10,length(gen6[gen6])/8)
+	}
+
+	return(list(prop_pop6,prop_pop10))
 }
