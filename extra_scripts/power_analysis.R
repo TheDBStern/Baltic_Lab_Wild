@@ -22,14 +22,14 @@ sd_res <- start_end %>%
       summarize(sd_raw= sd(value), sd_ang = sd(angular))
 
 
-pwrt<-pwr.t.test(d=0.01/mean(sd_res$sd_raw),n=c(5,6,7,8,9,10),sig.level=.05,type="two.sample",alternative="two.sided")
+pwrt<-pwr.t.test(d=0.05/mean(sd_res$sd_raw),n=c(5,6,7,8,9,10),sig.level=.00005,type="two.sample",alternative="two.sided")
 
 plot(pwrt$n,pwrt$power,type="b",xlab="sample size",ylab="power")
 
 #
-pwrt.fdr <- power.t.test.FDR(sd=mean(sd_res$sd_raw), n=5, delta=NULL,
+pwrt.fdr <- power.t.test.FDR(sd=mean(sd_res$sd_raw), n=NULL, delta=0.05,
                  FDR.level=0.05,
                  pi0=0.99,
-                 power=0.8,
+                 power=0.9,
                  type="two.sample",
                  alternative="two.sided" )

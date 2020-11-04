@@ -654,3 +654,134 @@ rfs_redundant <- function(nloci){
 
 	return(list(prop_pop6,prop_pop10))
 }
+
+af_sync <- function(dat){
+	counts <- strsplit(dat,":")
+	a <- as.numeric(counts[[1]][1])
+	t <- as.numeric(counts[[1]][2])
+	af <- a / (a+t)
+	return(af)
+}
+
+calc_jaccard_mimicree <- function(simdat,afc) {
+	Rep1_6 <- c()
+	Rep1_10 <- c()
+	Rep2_6 <- c()
+	Rep2_10 <- c()
+	Rep3_6 <- c()
+	Rep3_10 <- c()
+	Rep4_6 <- c()
+	Rep4_10 <- c()
+	Rep5_6 <- c()
+	Rep5_10 <- c()
+	Rep6_6 <- c()
+	Rep6_10 <- c()
+	Rep7_6 <- c()
+	Rep7_10 <- c()
+	Rep8_6 <- c()
+	Rep8_10 <- c()
+	Rep9_6 <- c()
+	Rep9_10 <- c()
+	Rep10_6 <- c()
+	Rep10_10 <- c()
+
+	for (i in 1:nrow(simdat)){
+		dat <- filter(simdat,V1==i)
+		dat <- t(dat[,4:33])
+		snpdat <- data.frame("counts"=dat,"Generation"=rep(c(0,6,10),10))
+		snpdat$value <- sapply(snpdat$counts, af_sync)
+		anc <- filter(snpdat, Generation==0)$value
+		gen6 <- filter(snpdat, Generation==6)$value - anc
+		gen10 <- filter(snpdat, Generation==10)$value - anc
+	  minafc <- afc
+		##gen6
+		if (gen6[1]>minafc){
+			Rep1_6 <- c(Rep1_6,i)
+			}
+		if (gen6[2]>minafc){
+			Rep2_6 <- c(Rep2_6,i)
+			}
+		if (gen6[3]>minafc){
+			Rep3_6 <- c(Rep3_6,i)
+			}
+		if (gen6[4]>minafc){
+			Rep4_6 <- c(Rep4_6,i)
+			}
+		if (gen6[5]>minafc){
+			Rep5_6 <- c(Rep5_6,i)
+			}
+		if (gen6[6]>minafc){
+			Rep6_6 <- c(Rep6_6,i)
+			}
+		if (gen6[7]>minafc){
+			Rep7_6 <- c(Rep7_6,i)
+			}
+		if (gen6[8]>minafc){
+			Rep8_6 <- c(Rep8_6,i)
+			}
+		if (gen6[9]>minafc){
+			Rep9_6 <- c(Rep9_6,i)
+			}
+		if (gen6[10]>minafc){
+			Rep10_6 <- c(Rep10_6,i)
+			}
+		##gen10
+		if (gen10[1] >minafc){
+			Rep1_10 <- c(Rep1_10,i)
+			}
+		if (gen10[2] >minafc){
+			Rep2_10 <- c(Rep2_10,i)
+			}
+		if (gen10[3] >minafc){
+			Rep3_10 <- c(Rep3_10,i)
+			}
+		if (gen10[4] >minafc){
+			Rep4_10 <- c(Rep4_10,i)
+			}
+		if (gen10[5] >minafc){
+			Rep5_10 <- c(Rep5_10,i)
+			}
+		if (gen10[6] >minafc){
+			Rep6_10 <- c(Rep6_10,i)
+			}
+		if (gen10[7] >minafc){
+			Rep7_10 <- c(Rep7_10,i)
+			}
+		if (gen10[8] >minafc){
+			Rep8_10 <- c(Rep8_10,i)
+			}
+		if (gen10[9] >minafc){
+			Rep9_10 <- c(Rep9_10,i)
+			}
+		if (gen10[10] >minafc){
+			Rep10_10 <- c(Rep10_10,i)
+			}
+		}
+
+	gen6_pops <- list(Rep1_6,Rep2_6,Rep3_6,Rep4_6,Rep5_6,Rep6_6,Rep7_6,Rep8_6,Rep9_6,Rep10_6)
+	gen10_pops <- list(Rep1_10,Rep2_10,Rep3_10,Rep4_10,Rep5_10,Rep6_10,Rep7_10,Rep8_10,Rep9_10,Rep10_10)
+
+	gen6_jac <- c()
+	gen10_jac <- c()
+
+	for (pop1 in 1:10){
+		for (pop2 in 1:10){
+			if (pop1 != pop2){
+				jac <- length(intersect(gen6_pops[[pop1]],gen6_pops[[pop2]])) / length(union(gen6_pops[[pop1]],gen6_pops[[pop2]]))
+				gen6_jac <- c(gen6_jac,jac)
+				}
+			}
+		}
+
+
+	for (pop1 in 1:10){
+		for (pop2 in 1:10){
+			if (pop1 != pop2){
+				jac <- length(intersect(gen10_pops[[pop1]],gen10_pops[[pop2]])) / length(union(gen10_pops[[pop1]],gen10_pops[[pop2]]))
+				gen10_jac <- c(gen10_jac,jac)
+				}
+			}
+		}
+
+	return(list(gen6_jac,gen10_jac))
+	}
