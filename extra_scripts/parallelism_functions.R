@@ -5,7 +5,7 @@
 library(lme4)
 library(dplyr)
 
-calc_jaccard_ind_sims <- function(simdat,afc){
+calc_jaccard_ind_sims <- function(sig_simdat,afc){
 	BSE3_6 <- c()
 	BSE3_10 <- c()
 	BSE4_6 <- c()

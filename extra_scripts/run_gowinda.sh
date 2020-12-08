@@ -1,3 +1,0 @@
-## using transcript snps and annotations
-# cd sig_snps
-java -Xmx4g -jar ~/Desktop/Genomics_Programs/gowinda/Gowinda-1.12.jar --snp-file lab.snpdet --candidate-snp-file sig_snps.cmh05.lrt05.txt --gene-set-file ~/Desktop/Baltic_sea_project/pseudoref/reference/sequences_per_go.desc.txt --annotation-file ~/Desktop/Baltic_sea_project/pseudoref/reference/Iteration_2.trinity.Trinity.cdhit95.filtered.gtf --simulations 100000 --min-significance 1 --gene-definition gene --threads 4 --output-file sig_snps.cmh05.lrt05.gowinda.gene.txt --mode gene --min-genes 1

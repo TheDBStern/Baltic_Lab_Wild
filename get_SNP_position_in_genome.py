@@ -45,18 +45,21 @@ with open(args.snps,'rU') as f:
 	for line in f:
 		contig = line.split()[0]
 		position = int(line.split()[1])
-		scaffold = scaffold_dict[contig]
-		genomePosition1 = genomePosition1_dict[contig]
-		genomePosition2 = genomePosition2_dict[contig]
-		transPosition1 = transPosition1_dict[contig]
-		transPosition2 = transPosition2_dict[contig]
-		# an approximate position for the SNP could be obtained by finding the approximate start position and add the SNP position
-		if transPosition1 < transPosition2:
-			start = transPosition1
+		if contig in scaffold_dict.keys():
+			scaffold = scaffold_dict[contig]
+			genomePosition1 = genomePosition1_dict[contig]
+			genomePosition2 = genomePosition2_dict[contig]
+			transPosition1 = transPosition1_dict[contig]
+			transPosition2 = transPosition2_dict[contig]
+			# an approximate position for the SNP could be obtained by finding the approximate start position and add the SNP position
+			if transPosition1 < transPosition2:
+				start = transPosition1
+			else:
+				start = transPosition2				
+			if genomePosition1 < genomePosition2:
+				snpPosition =  genomePosition1 - start + position
+			else:
+				snpPosition =  genomePosition2 - start + position
+			out_snps.write(scaffold+'\t'+str(snpPosition)+'\n')
 		else:
-			start = transPosition2				
-		if genomePosition1 < genomePosition2:
-			snpPosition =  genomePosition1 - start + position
-		else:
-			snpPosition =  genomePosition2 - start + position
-		out_snps.write(scaffold+'\t'+str(snpPosition)+'\n')
+			out_snps.write('NA'+'\t'+'NA'+'\n')
