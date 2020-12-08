@@ -10,4 +10,4 @@ Other data wrangling and analysis scripts are in the *extra_scripts* directory
 and contain limited documentation within.
 
 Functions for calculating parallelism, e.g., Jaccard index are in
-`extra_scripts/parallelism_function.R`
+`extra_scripts/parallelism_functions.R`
