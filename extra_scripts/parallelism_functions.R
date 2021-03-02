@@ -107,35 +107,45 @@ calc_jaccard_ind_sims <- function(sig_simdat,afc){
 			}
 		}
 
-	gen6_pops <- list(BSE3_6,BSE4_6,BSE5_6,BSE6_6,BSE7_6,BSE8_6,BSE9_6,BSE10_6,BSE11_6,BSE12_6)
-	gen10_pops <- list(BSE3_10,BSE4_10,BSE5_10,BSE6_10,BSE7_10,BSE8_10,BSE9_10,BSE10_10,BSE11_10,BSE12_10)
+		gen6_names <- c("BSE3_6","BSE4_6","BSE5_6","BSE6_6","BSE7_6","BSE8_6","BSE9_6","BSE10_6","BSE11_6","BSE12_6")
+		gen10_names <- c("BSE3_10","BSE4_10","BSE5_10","BSE6_10","BSE7_10","BSE8_10","BSE9_10","BSE10_10","BSE11_10","BSE12_10")
+		gen6_pops <- list(BSE3_6,BSE4_6,BSE5_6,BSE6_6,BSE7_6,BSE8_6,BSE9_6,BSE10_6,BSE11_6,BSE12_6)
+		names(gen6_pops) <- gen6_names
+		gen10_pops <- list(BSE3_10,BSE4_10,BSE5_10,BSE6_10,BSE7_10,BSE8_10,BSE9_10,BSE10_10,BSE11_10,BSE12_10)
+		names(gen10_pops) <- gen10_names
 
-	gen6_jac <- c()
-	gen10_jac <- c()
+		gen6_jac <- matrix(nrow = length(gen6_pops), ncol = length(gen6_pops),
+								dimnames = list(c(gen6_names),c(gen6_names)))
 
-	for (pop1 in 1:10){
-		for (pop2 in 1:10){
-			if (pop1 != pop2){
-				jac <- length(intersect(gen6_pops[[pop1]],gen6_pops[[pop2]])) / length(union(gen6_pops[[pop1]],gen6_pops[[pop2]]))
-				gen6_jac <- c(gen6_jac,jac)
+		gen10_jac <- matrix(nrow = length(gen10_pops), ncol = length(gen10_pops),
+								dimnames = list(c(gen10_names),c(gen10_names)))
+
+		for (i in 1:10){
+			for (x in 1:10){
+				if (i != x){
+					pop1 <- gen6_names[[i]]
+					pop2 <- gen6_names[[x]]
+					jac <- length(intersect(gen6_pops[[pop1]],gen6_pops[[pop2]])) / length(union(gen6_pops[[pop1]],gen6_pops[[pop2]]))
+					#gen6_jac <- c(gen6_jac,jac)
+					gen6_jac[pop1,pop2] <- jac
+					}
 				}
 			}
-		}
 
 
-	for (pop1 in 1:10){
-		for (pop2 in 1:10){
-			if (pop1 != pop2){
-				jac <- length(intersect(gen10_pops[[pop1]],gen10_pops[[pop2]])) / length(union(gen10_pops[[pop1]],gen10_pops[[pop2]]))
-				gen10_jac <- c(gen10_jac,jac)
+		for (i in 1:10){
+				for (x in 1:10){
+					if (i != x){
+						pop1 <- gen10_names[[i]]
+						pop2 <- gen10_names[[x]]
+						jac <- length(intersect(gen10_pops[[pop1]],gen10_pops[[pop2]])) / length(union(gen10_pops[[pop1]],gen10_pops[[pop2]]))
+						#gen10_jac <- c(gen10_jac,jac)
+						gen10_jac[pop1,pop2] <- jac
+						}
+					}
 				}
-			}
-		}
 
-	gen6_jac_sim <- gen6_jac
-	gen10_jac_sim <- gen10_jac
-
-	return(list(gen6_jac,gen10_jac))
+		return(list(gen6_jac[lower.tri(gen6_jac, diag = FALSE)],gen10_jac[lower.tri(gen10_jac, diag = FALSE)]))
 }
 
 calc_jaccard_qt_sims <- function(simdat,afc){
@@ -232,32 +242,46 @@ calc_jaccard_qt_sims <- function(simdat,afc){
 			}
 		}
 
-	gen6_pops <- list(Rep1_6,Rep2_6,Rep3_6,Rep4_6,Rep5_6,Rep6_6,Rep7_6,Rep8_6,Rep9_6,Rep10_6)
-	gen10_pops <- list(Rep1_10,Rep2_10,Rep3_10,Rep4_10,Rep5_10,Rep6_10,Rep7_10,Rep8_10,Rep9_10,Rep10_10)
+		gen6_names <- c("Rep1_6","Rep2_6","Rep3_6","Rep4_6","Rep5_6","Rep6_6","Rep7_6","Rep8_6","Rep9_6","Rep10_6")
+		gen10_names <- c("Rep1_10","Rep2_10","Rep3_10","Rep4_10","Rep5_10","Rep6_10","Rep7_10","Rep8_10","Rep9_10","Rep10_10")
+		gen6_pops <- list(Rep1_6,Rep2_6,Rep3_6,Rep4_6,Rep5_6,Rep6_6,Rep7_6,Rep8_6,Rep9_6,Rep10_6)
+		names(gen6_pops) <- gen6_names
+		gen10_pops <- list(Rep1_10,Rep2_10,Rep3_10,Rep4_10,Rep5_10,Rep6_10,Rep7_10,Rep8_10,Rep9_10,Rep10_10)
+		names(gen10_pops) <- gen10_names
 
-	gen6_jac <- c()
-	gen10_jac <- c()
+		gen6_jac <- matrix(nrow = length(gen6_pops), ncol = length(gen6_pops),
+								dimnames = list(c(gen6_names),c(gen6_names)))
 
-	for (pop1 in 1:10){
-		for (pop2 in 1:10){
-			if (pop1 != pop2){
-				jac <- length(intersect(gen6_pops[[pop1]],gen6_pops[[pop2]])) / length(union(gen6_pops[[pop1]],gen6_pops[[pop2]]))
-				gen6_jac <- c(gen6_jac,jac)
+		gen10_jac <- matrix(nrow = length(gen10_pops), ncol = length(gen10_pops),
+								dimnames = list(c(gen10_names),c(gen10_names)))
+
+		for (i in 1:10){
+			for (x in 1:10){
+				if (i != x){
+					pop1 <- gen6_names[[i]]
+					pop2 <- gen6_names[[x]]
+					jac <- length(intersect(gen6_pops[[pop1]],gen6_pops[[pop2]])) / length(union(gen6_pops[[pop1]],gen6_pops[[pop2]]))
+					#gen6_jac <- c(gen6_jac,jac)
+					gen6_jac[pop1,pop2] <- jac
+					}
 				}
 			}
-		}
 
 
-	for (pop1 in 1:10){
-		for (pop2 in 1:10){
-			if (pop1 != pop2){
-				jac <- length(intersect(gen10_pops[[pop1]],gen10_pops[[pop2]])) / length(union(gen10_pops[[pop1]],gen10_pops[[pop2]]))
-				gen10_jac <- c(gen10_jac,jac)
+		for (i in 1:10){
+				for (x in 1:10){
+					if (i != x){
+						pop1 <- gen10_names[[i]]
+						pop2 <- gen10_names[[x]]
+						jac <- length(intersect(gen10_pops[[pop1]],gen10_pops[[pop2]])) / length(union(gen10_pops[[pop1]],gen10_pops[[pop2]]))
+						#gen10_jac <- c(gen10_jac,jac)
+						gen10_jac[pop1,pop2] <- jac
+						}
+					}
 				}
-			}
-		}
 
-	return(list(gen6_jac,gen10_jac))
+		return(list(gen6_jac[lower.tri(gen6_jac, diag = FALSE)],gen10_jac[lower.tri(gen10_jac, diag = FALSE)]))
+
 }
 
 calc_jaccard_emp <- function(sig_dat,afc){
@@ -348,32 +372,45 @@ calc_jaccard_emp <- function(sig_dat,afc){
 			}
 		}
 
+	gen6_names <- c("BSE3_6","BSE4_6","BSE5_6","BSE6_6","BSE7_6","BSE8_6","BSE9_6","BSE10_6","BSE11_6","BSE12_6")
+	gen10_names <- c("BSE3_10","BSE4_10","BSE5_10","BSE6_10","BSE8_10","BSE9_10","BSE11_10","BSE12_10")
 	gen6_pops <- list(BSE3_6,BSE4_6,BSE5_6,BSE6_6,BSE7_6,BSE8_6,BSE9_6,BSE10_6,BSE11_6,BSE12_6)
+	names(gen6_pops) <- gen6_names
 	gen10_pops <- list(BSE3_10,BSE4_10,BSE5_10,BSE6_10,BSE8_10,BSE9_10,BSE11_10,BSE12_10)
+	names(gen10_pops) <- gen10_names
 
-	gen6_jac <- c()
-	gen10_jac <- c()
+	gen6_jac <- matrix(nrow = length(gen6_pops), ncol = length(gen6_pops),
+							dimnames = list(c(gen6_names),c(gen6_names)))
 
-	for (pop1 in 1:10){
-		for (pop2 in 1:10){
-			if (pop1 != pop2){
+	gen10_jac <- matrix(nrow = length(gen10_pops), ncol = length(gen10_pops),
+							dimnames = list(c(gen10_names),c(gen10_names)))
+
+	for (i in 1:10){
+		for (x in 1:10){
+			if (i != x){
+				pop1 <- gen6_names[[i]]
+				pop2 <- gen6_names[[x]]
 				jac <- length(intersect(gen6_pops[[pop1]],gen6_pops[[pop2]])) / length(union(gen6_pops[[pop1]],gen6_pops[[pop2]]))
-				gen6_jac <- c(gen6_jac,jac)
+				#gen6_jac <- c(gen6_jac,jac)
+				gen6_jac[pop1,pop2] <- jac
 				}
 			}
 		}
 
 
-	for (pop1 in 1:8){
-		for (pop2 in 1:8){
-			if (pop1 != pop2){
-				jac <- length(intersect(gen10_pops[[pop1]],gen10_pops[[pop2]])) / length(union(gen10_pops[[pop1]],gen10_pops[[pop2]]))
-				gen10_jac <- c(gen10_jac,jac)
+	for (i in 1:8){
+			for (x in 1:8){
+				if (i != x){
+					pop1 <- gen10_names[[i]]
+					pop2 <- gen10_names[[x]]
+					jac <- length(intersect(gen10_pops[[pop1]],gen10_pops[[pop2]])) / length(union(gen10_pops[[pop1]],gen10_pops[[pop2]]))
+					#gen10_jac <- c(gen10_jac,jac)
+					gen10_jac[pop1,pop2] <- jac
+					}
 				}
 			}
-		}
 
-	return(list(gen6_jac,gen10_jac))
+	return(list(gen6_jac[lower.tri(gen6_jac, diag = FALSE)],gen10_jac[lower.tri(gen10_jac, diag = FALSE)]))
 }
 
 rfs_empirical <- function(sig_dat, afc){

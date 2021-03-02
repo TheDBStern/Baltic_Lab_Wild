@@ -42,7 +42,7 @@ The data columns are in the following order:
 ### wild.genobaypass and wild.snpdet
 **wild.genobaypass** contains read counts for biallelic SNPs in Baypass format
 generated using *poolfstat*
-**wild.snpdet** contains the reference contig and position for every SNP
+**lab.snpdet** contains the reference contig and position for every SNP
 in the *genobaypass* file
 
 The data columns are in the following order:
