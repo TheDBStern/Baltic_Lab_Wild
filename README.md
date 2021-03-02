@@ -1,6 +1,6 @@
 # Baltic_Lab_Wild
-## scripts to execute the analyses for the *E. affinis* Baltic Sea selection
-## experiment and comparison with wild populations
+Scripts to execute the analyses for the *E. affinis* Baltic Sea selection
+experiment and comparison with wild populations
 
 Primary data processing scripts are in the main directory.
 Command-line options for python scripts can be found, e.g.,
