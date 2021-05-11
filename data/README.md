@@ -58,3 +58,7 @@ The data columns are in the following order:
 | RG1E | Gulf of Riga 1 |
 | RG2E | Gulf of Riga 2|
 | STE | Stockholm, Sweden |
+
+### lab.all.RDS and lab.sig.RDS
+**lab.all.RDS** is an rds file (read into R using readRDS(lab.all.RDS)) has some test statistics and allele frequencies for all called SNPs 
+**lab.sig.RDS** is an rds file with statistics for just the 1156 significant SNPs

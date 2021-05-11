@@ -6,13 +6,13 @@ library(dplyr)
 
 numSnps <- 1156
 poolsize <- 100
-freqdat <- read.table('../../lab.genobaypass_freq',h=F)
-covdat <- read.table('../../lab.genobaypass_cov',h=F)
-snpdet <- read.table('../../lab.snpdet',h=F)[,1:2]
+freqdat <- read.table('lab.genobaypass_freq',h=F)
+covdat <- read.table('lab.genobaypass_cov',h=F)
+snpdet <- read.table('lab.snpdet',h=F)[,1:2]
 colnames(snpdet) <- c("Pseudo_Transcript","Pseudo_Position")
 freqdat <- cbind(freqdat,snpdet)
-res_all <- readRDS('../../lab.res.new.RDS')
-seldat <- readRDS('../../lab.res.new.cmh05.lrt05.RDS')
+res_all <- readRDS('lab.all.RDS')
+seldat <- readRDS('lab.sig.RDS')
 #non_seldat <- filter(res_all, LRT_pval > max(seldat$LRT_pval) | CMH_qval > 0.05)
 selfreq <- merge(freqdat,seldat,by=c("Pseudo_Transcript","Pseudo_Position"))
 allfreq <- merge(freqdat,res_all,by=c("Pseudo_Transcript","Pseudo_Position"))

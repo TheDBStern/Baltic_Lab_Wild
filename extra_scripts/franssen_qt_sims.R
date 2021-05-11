@@ -1,7 +1,7 @@
 library(dplyr)
 
-sig_all <- readRDS('/Users/dbstern/Desktop/Baltic_sea_project/pseudoref/varscan/lab.res.new.cmh05.lrt05.RDS')
-all <- readRDS('/Users/dbstern/Desktop/Baltic_sea_project/pseudoref/varscan/lab.res.new.RDS')
+sig_all <- readRDS('lab.sig.RDS')
+all <- readRDS('lab.all.RDS')
 
 
 ## testing number of loci
