@@ -10,6 +10,7 @@ Primary data processing scripts are in the main directory. Command-line options 
 - [bams2SNPs.commands.sh](./bams2SNPs.commands.sh) Commands used to call SNPs and generate allele count files
 - [baypass2freqs_cov.py](./baypass2freqs_cov.py) Converts a file from multipopulation BayPass format (refcount1 altcount1 etc.) to frequencies of the alt allele and a coverage matrix
 - [calculate_coverage_distribution_sync.py](./calculate_coverage_distribution_sync.py) Calculates the top X percentage of coverage across all pools from a sync file
+- [Figure_code.R](./Figure_code.R) R code used to generate the main figures of the manuscript. Some of the data files need to be generated using the scripts in this repository
 - [filter_fasta_by_blast.py](./filter_fasta_by_blast.py) Filters a multifasta file based on whether sequences had a significant blast hit to some sequence database or genome
 - [filter_sync_by_snplist.py](./filter_sync_by_snplist.py) Filters a sync file (Popoolation2) by a list of SNPs to keep (e.g. a snpdet file produced by poolfstat)
 - [get_SNP_position_in_genome.py](./get_SNP_position_in_genome.py) Convert SNP positions called in one reference genome to approximate position in another genome based on blast results
