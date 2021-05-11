@@ -24,7 +24,7 @@ Primary data processing scripts are in the main directory. Command-line options 
 Other data wrangling and analysis scripts are in the [extra_scripts](./extra_scripts) directory and contain some limited documentation within.
 
 Functions for calculating parallelism, e.g., Jaccard index are in
-`extra_scripts/parallelism_function.R`
+`extra_scripts/parallelism_functions.R`
 
 ## Software required to run these scripts
 - [BLAST 2.7.1+](https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/)
