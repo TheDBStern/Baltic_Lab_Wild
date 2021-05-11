@@ -3,7 +3,6 @@
 import argparse
 import numpy as np
 import time
-import progressbar
 from joblib import Parallel, delayed
 import multiprocessing
 
@@ -16,7 +15,7 @@ parser.add_argument('-o', dest = 'output', type = str, required=True,  help = 'o
 args = parser.parse_args()
 
 output = open(args.output, 'w')
-    
+
 def calc_cov_per_line(line):
 	popdat = line.split('\t')[3:]
 	for pop in popdat:

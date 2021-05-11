@@ -132,9 +132,10 @@ library(haploReconstruct)
 library(dplyr)
 library(ggplot2)
 
-reps <- 5
-ne <- 250
-dat <- sync_to_frequencies(file="ne250.rep10.5reps.sync",base.pops=rep(c(TRUE,rep(FALSE,2)),times=reps), header=F)
+reps <- 8
+ne <- 2000
+for (i in 1:10){
+dat <- sync_to_frequencies(file=paste("ne",ne,".rep",i,".",reps,"reps.r0.sync",sep=''),base.pops=rep(c(TRUE,rep(FALSE,2)),times=reps), header=F)
 
 freqs <- as.matrix(dat[,7:(3*reps+6)])
 cov <- matrix(
@@ -145,9 +146,9 @@ cov <- matrix(
 
 res <- adapted.cmh.test(freq=freqs, coverage=cov,poolSize = NULL,IntGen=TRUE, order=0, gen=c(0,6,10), Ne=rep(ne,reps), repl=1:reps, RetVal = 2)
 #plot(-log10(res[,2]))
-saveRDS(res, 'rep10.cmh.RDS')
+saveRDS(res, paste('rep',i,'.cmh.r0.16.RDS',sep=''))
 
-true_sel <- read.table('selection_coefficients.ne250.rep10.txt',skip=1)
+true_sel <- read.table(paste('selection_coefficients.ne',ne,'.rep',i,'.txt',sep=''),skip=1)
 dat$pval <- -log10(res[,2])
 dat$true <- ifelse(dat$pos %in% true_sel$V2, "Sel","Neutral")
 
@@ -157,8 +158,8 @@ top25 <- dat %>%
 tp <- nrow(filter(top25, true=="Sel")) / 25
 fp <- nrow(filter(top25, true=="Neutral")) / 25
 
-write.table(cbind(tp,fp),'rep10.tpr_fpr.txt',sep='\t', quote=F,row.names=F)
-
+write.table(cbind(tp,fp),paste('rep',i,'.tpr_fpr.r0.16.txt',sep=''), quote=F,row.names=F)
+}
 
 p <- ggplot(dat, aes(x=pos, y=pval, color=true))
 	p + geom_point(alpha=0.8) +

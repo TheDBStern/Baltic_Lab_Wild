@@ -11,11 +11,11 @@ awk '{{print (NR%4 == 1) ? "@1_" ++i "/2": $0}}' poolSeq50M_R2.fastq > poolSeq50
 
 ##### Iteration 1 ###########
 # map the 'left' reads to the non-redundant transcriptome
-bwa index Purple.Trinity.highestiso.cdhit95.fasta 
+bwa index Purple.Trinity.highestiso.cdhit95.fasta
 bwa mem -t 8 Purple.Trinity.highestiso.cdhit95.fasta poolSeq50M_R1.fix.fastq | samtools view -@ 8 -q 20 -F 4 -b - | samtools sort -n -@ 8 - | samtools fastq -@ 8 - > mapped_left.1.fastq
 
 # extract the 'right' reads
-python get_mates.py poolSeq50M_R2.fix.fastq mapped_left.1.fastq
+python get_mates.py -m mapped_left.1.fastq -r poolSeq50M_R2.fix.fastq -o right_mates.fastq
 
 # run Trinity and cluster
 Trinity --max_memory 50G --seqType fq --left mapped_left.1.fastq --right right_mates.fastq --min_contig_length 200 --CPU 8 --output Iteration_1.trinity --full_cleanup
@@ -25,11 +25,11 @@ rm right_mates.fastq
 
 ##### Iteration 2 ###########
 # map the 'left' reads to the iteration one assembly
-bwa index Iteration_1.trinity.Trinity.cdhit95.fasta 
+bwa index Iteration_1.trinity.Trinity.cdhit95.fasta
 bwa mem -t 8 Iteration_1.trinity.Trinity.cdhit95.fasta poolSeq50M_R1.fix.fastq | samtools view -@ 8 -q 20 -F 4 -b - | samtools sort -n -@ 8 - | samtools fastq -@ 8 - > mapped_left.2.fastq
 
 # extract the right reads
-python get_mates.py poolSeq50M_R2.fix.fastq mapped_left.2.fastq
+python get_mates.py -m mapped_left.2.fastq -r poolSeq50M_R2.fix.fastq -o right_mates.fastq
 
 # run Trinity and cluster
 Trinity --max_memory 50G --seqType fq --left mapped_left.2.fastq --right right_mates.fastq --min_contig_length 200 --CPU 8 --output Iteration_2.trinity --full_cleanup

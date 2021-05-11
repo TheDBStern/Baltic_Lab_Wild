@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import argparse
 
-parser = argparse.ArgumentParser(description='Script to convert pseudoreference SNP position to approximate position in genome based on best blast hit')
+parser = argparse.ArgumentParser(description='Script to convert SNP positions called in one reference genome to approximate position in another genome based on blast results')
 parser.add_argument('-i', dest = 'snps', type = str, required=True,  help = 'input snp file, format `transcript position`')
 parser.add_argument('-b', dest = 'blast', type = str, required=True,  help = 'input blast output file, outfmt 6')
 parser.add_argument('-o', dest = 'out', type = str, required=True,  help = 'output converted SNP file')
@@ -40,7 +40,7 @@ with open(args.blast, 'rU') as b:
 			transPosition2_dict[gene] = int(line.split('\t')[7])
 
 print('Blast dictionary finished')
-			
+
 with open(args.snps,'rU') as f:
 	for line in f:
 		contig = line.split()[0]
@@ -55,7 +55,7 @@ with open(args.snps,'rU') as f:
 			if transPosition1 < transPosition2:
 				start = transPosition1
 			else:
-				start = transPosition2				
+				start = transPosition2
 			if genomePosition1 < genomePosition2:
 				snpPosition =  genomePosition1 - start + position
 			else:
