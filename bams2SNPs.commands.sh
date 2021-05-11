@@ -1,6 +1,6 @@
 ## Commands to call SNPs from multiple bam files, creating VCF, genobaypass and sync files
 
-samtools mpileup -q 20 -Q 0 -d 8000 -R -A –B -f Iteration_2.trinity.Trinity.cdhit95.filtered.fasta -b bamfiles.txt -o lab.mpileup
+samtools mpileup -q 20 -Q 0 -d 8000 -R -A –B -f Baltic_Pseudoreference.filtered.fasta -b bamfiles.txt -o lab.mpileup
 
 ## Generate .vcf and genobaypass files along with pairwise Fst using poolfstat
 varscan mpileup2cns lab.mpileup --min-coverage 20 --min-avg-qual 20 --min-reads2 4 --min-var-freq 0.001 --output-vcf 1 --variants > lab.vcf
