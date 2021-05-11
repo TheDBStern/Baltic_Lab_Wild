@@ -3,7 +3,7 @@ This repository contains analysis scripts and data associated with our manuscrip
 
 > Stern DB, Diaz JA, and CE Lee. Parallel polygenic adaptation driven by epistasis in laboratory and wild populations of a Baltic Sea Copepod
 
-# Usage
+## Usage
 Primary data processing scripts are in the main directory. Command-line options for python scripts can be found, e.g.,
 `baypass2freqs_cov.py -h`
 
@@ -25,46 +25,46 @@ Other data wrangling and analysis scripts are in the [extra_scripts](./extra_scr
 Functions for calculating parallelism, e.g., Jaccard index are in
 `extra_scripts/parallelism_function.R`
 
-# Software required to run these scripts
-[BLAST 2.7.1+](https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/)
-[BWA-MEM v0.7.17](http://bio-bwa.sourceforge.net/bwa.shtml)
-[CD-HIT v4.7](http://weizhongli-lab.org/cd-hit/)
-[PoPoolation2](https://sourceforge.net/p/popoolation2/wiki/Main/)
-[SAMBLASTER v0.1.26](https://github.com/GregoryFaust/samblaster)
-[Samtools v1.3.1](http://www.htslib.org/)
-[Trinity v2.6.6](https://github.com/trinityrnaseq/trinityrnaseq/wiki)
-[VarScan v2.4.3](http://varscan.sourceforge.net/)
+## Software required to run these scripts
+- [BLAST 2.7.1+](https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/)
+- [BWA-MEM v0.7.17](http://bio-bwa.sourceforge.net/bwa.shtml)
+- [CD-HIT v4.7](http://weizhongli-lab.org/cd-hit/)
+- [PoPoolation2](https://sourceforge.net/p/popoolation2/wiki/Main/)
+- [SAMBLASTER v0.1.26](https://github.com/GregoryFaust/samblaster)
+- [Samtools v1.3.1](http://www.htslib.org/)
+- [Trinity v2.6.6](https://github.com/trinityrnaseq/trinityrnaseq/wiki)
+- [VarScan v2.4.3](http://varscan.sourceforge.net/)
 
-# Python packages
+## Python packages
 Python version 3.8.2
-[BioPython v1.78](https://biopython.org/)
-[joblib v.1.0.1](https://joblib.readthedocs.io/en/latest/)
-[numpy v1.15.2](https://numpy.org/)
+- [BioPython v1.78](https://biopython.org/)
+- [joblib v.1.0.1](https://joblib.readthedocs.io/en/latest/)
+- [numpy v1.15.2](https://numpy.org/)
 
-# R packages
+## R packages
 R version 4.0.4
-[data.table v.1.14.0](https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html)
-[dplyr v1.0.5](https://dplyr.tidyverse.org/)
-[lme4 v1.1.21](https://cran.r-project.org/web/packages/lme4/lme4.pdf)
-[poolfstat v1.1.1](https://cran.r-project.org/web/packages/poolfstat/poolfstat.pdf)
-[qvalue v2.14.1](https://github.com/StoreyLab/qvalue)
-[tcR v2.3.2](https://cran.r-project.org/web/packages/tcR/index.html)
+- [data.table v.1.14.0](https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html)
+- [dplyr v1.0.5](https://dplyr.tidyverse.org/)
+- [lme4 v1.1.21](https://cran.r-project.org/web/packages/lme4/lme4.pdf)
+- [poolfstat v1.1.1](https://cran.r-project.org/web/packages/poolfstat/poolfstat.pdf)
+- [qvalue v2.14.1](https://github.com/StoreyLab/qvalue)
+- [tcR v2.3.2](https://cran.r-project.org/web/packages/tcR/index.html)
 
-# Other software used in the manuscript
-[ACER v1.0.2](https://github.com/MartaPelizzola/ACER)
-[BBTools](https://jgi.doe.gov/data-and-tools/bbtools/)
-[BEDOPS v2.4.39](https://bedops.readthedocs.io/en/latest/)
-[Bowtie v2.3.5](http://bowtie-bio.sourceforge.net/bowtie2/manual.shtml)
-[DAVID v6.8](https://david.ncifcrf.gov/)
-[HMMER v3.2.1](http://hmmer.org/)
-[MimicrEE2](https://sourceforge.net/p/mimicree2/wiki/Home/)
-[RSEM v1.3.1](https://deweylab.github.io/RSEM/)
-[PolygenicAdaptationCode](https://github.com/jjberg2/PolygenicAdaptationCode)
-[Transdecoder v5.5](https://github.com/TransDecoder/TransDecoder/wiki)
-[Trimmomatic v0.39](http://www.usadellab.org/cms/?page=trimmomatic)
-[TreeMix v1.13](https://bitbucket.org/nygcresearch/treemix/wiki/Home)
+## Other software used in the manuscript
+- [ACER v1.0.2](https://github.com/MartaPelizzola/ACER)
+- [BBTools](https://jgi.doe.gov/data-and-tools/bbtools/)
+- [BEDOPS v2.4.39](https://bedops.readthedocs.io/en/latest/)
+- [Bowtie v2.3.5](http://bowtie-bio.sourceforge.net/bowtie2/manual.shtml)
+- [DAVID v6.8](https://david.ncifcrf.gov/)
+- [HMMER v3.2.1](http://hmmer.org/)
+- [MimicrEE2](https://sourceforge.net/p/mimicree2/wiki/Home/)
+- [RSEM v1.3.1](https://deweylab.github.io/RSEM/)
+- [PolygenicAdaptationCode](https://github.com/jjberg2/PolygenicAdaptationCode)
+- [Transdecoder v5.5](https://github.com/TransDecoder/TransDecoder/wiki)
+- [Trimmomatic v0.39](http://www.usadellab.org/cms/?page=trimmomatic)
+- [TreeMix v1.13](https://bitbucket.org/nygcresearch/treemix/wiki/Home)
 
-# Data
+## Data
 SNPs and allele counts derived from the Pool-seq data are available in the data directory. Please see the README file within for information.
 
 Please contact the authors for questions or issues.
