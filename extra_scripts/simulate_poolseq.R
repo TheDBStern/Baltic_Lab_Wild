@@ -17,14 +17,14 @@ seldat <- readRDS('lab.sig.RDS')
 selfreq <- merge(freqdat,seldat,by=c("Pseudo_Transcript","Pseudo_Position"))
 allfreq <- merge(freqdat,res_all,by=c("Pseudo_Transcript","Pseudo_Position"))
 
-Ne <- 2000
+Ne <- 200
 
 
 #########
 ## simulate 1156 loci under selection in 10 populations for ten replicate simulations
 #########
 
-for (rep in 11:100){
+for (rep in 1:1000){
 print(paste("Rep ",rep,sep=''))
 res_freq <- c()
 res_cov <- c()
@@ -50,6 +50,6 @@ for (i in 1:1156){
 	res_cov <- rbind(res_cov,snp_cov)
 	}
 
-write.table(res_freq,paste('emp_vals.1156sel.allStart.rep',rep,'.freq',sep=''),sep='\t',row.names=F,quote=F)
-write.table(res_cov,paste('emp_vals.1156sel.allStart.rep',rep,'.cov',sep=''),sep='\t',row.names=F,quote=F)
+write.table(res_freq,paste('ne200.1156sel.allStart.rep',rep,'.freq',sep=''),sep='\t',row.names=F,quote=F)
+write.table(res_cov,paste('ne200.1156sel.allStart.rep',rep,'.cov',sep=''),sep='\t',row.names=F,quote=F)
 }

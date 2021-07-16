@@ -8,14 +8,13 @@
 
 library(ggplot2)
 library(dplyr)
-dat <- readRDS('full_data.rawFreqs.RDS') # this file can be generated from prep_lmm.R by removing the arcsin transformations and calculating the divergence from the starting population
+dat <- readRDS('full_data.rawFreqs.RDS') # this file can be generated from prep_lmm.rawFreqs.R
 bse0_tmp <- filter(dat,Beaker=="BSE-0")
 bse0_tmp$Treat <- rep("Treatment",nrow(bse0_tmp))
 bse0b_tmp <- filter(dat,Beaker=="BSE-0B")
 bse0b_tmp$Treat <- rep("Treatment",nrow(bse0b_tmp))
 dat <- rbind(dat,bse0_tmp)
 dat <- rbind(dat,bse0b_tmp)
-dat$folded <- sapply(dat$value,fold_AF)
 
 
 res <- readRDS('data/lab.all.RDS')
@@ -114,7 +113,7 @@ source("extra_scripts/parallelism_functions.R")
 
 # empirical data
 # data are formatted to show change from ancestor
-dat <- readRDS('full_data_lmm.rawAF.RDS')
+dat <- readRDS('full_data_lmm.rawAF.RDS') #this file can be generated from prep_lmm.rawAFC.R
 snpdet <- read.table('data/lab.snpdet')
 dat$Pseudo_Transcript <- rep(snpdet[,1],26)
 dat$Pseudo_Position <- rep(snpdet[,2],26)
@@ -131,6 +130,7 @@ sig_dat <- merge(dat,sig,by=c("Pseudo_Transcript","Pseudo_Position"))
 jaccard_emp <- calc_jaccard_emp(sig_dat,0.01)
 
 #independent SNP sims (sweeps)
+# these files are generated using the simulate_poolseq.R script in 'extra_scripts'
 jaccard_ind_6 <- c()
 jaccard_ind_10 <- c()
 
@@ -145,6 +145,8 @@ for (i in 1:length(ind_sim_files)){
 	}
 
 #polygenic shift sims, 30 loci
+# these files are generated using the franssen_qt_sims.R script in 'extra_scripts'
+
 jaccard_qt30_6 <- c()
 jaccard_qt30_10 <- c()
 
@@ -228,6 +230,7 @@ emp_qt30 <- lm(Jaccard~Gen*Group, data=filter(plotdat, Group=="Bind1156" | Group
 #### Assessing parallelism using the replicate frequency spectrum
 
 # data are formatted to show change from ancestor
+# this file can be generated using the prep_lmm.rawAFC.R script
 dat <- readRDS('full_data_lmm.rawAF.RDS')
 snpdet <- read.table('data/lab.snpdet')
 dat$Pseudo_Transcript <- rep(snpdet[,1],26)

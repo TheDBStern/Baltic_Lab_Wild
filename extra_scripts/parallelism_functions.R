@@ -822,3 +822,130 @@ calc_jaccard_mimicree <- function(simdat,afc) {
 
 	return(list(gen6_jac,gen10_jac))
 	}
+
+calc_jaccard_hap_blocks <- function(sig_dat,afc){
+		BSE3_6 <- c()
+		BSE3_10 <- c()
+		BSE4_6 <- c()
+		BSE4_10 <- c()
+		BSE5_6 <- c()
+		BSE5_10 <- c()
+		BSE6_6 <- c()
+		BSE6_10 <- c()
+		BSE7_6 <- c()
+		BSE8_6 <- c()
+		BSE8_10 <- c()
+		BSE9_6 <- c()
+		BSE9_10 <- c()
+		BSE10_6 <- c()
+		BSE11_6 <- c()
+		BSE11_10 <- c()
+		BSE12_6 <- c()
+		BSE12_10 <- c()
+
+
+		for (i in 1:length(unique(sig_dat$SNP))){
+			snpnum <- unique(sig_dat$SNP)[i]
+			dt <- filter(sig_dat,SNP==snpnum)
+			#dt <- sig_dat[which(sig_dat$SNP==snpnum)]
+			gen6 <- filter(dt, Treat=="Treatment" & Generation==6)$value
+			gen10 <- filter(dt, Treat=="Treatment" & Generation==10)$value
+			minafc <- afc
+			##gen6
+			if (gen6[1]>minafc){
+				BSE3_6 <- c(BSE3_6,dt$SNP[1])
+				}
+			if (gen6[2]>minafc){
+				BSE4_6 <- c(BSE4_6,dt$SNP[1])
+				}
+			if (gen6[3]>minafc){
+				BSE5_6 <- c(BSE5_6,dt$SNP[1])
+				}
+			if (gen6[4]>minafc){
+				BSE6_6 <- c(BSE6_6,dt$SNP[1])
+				}
+			if (gen6[5]>minafc){
+				BSE7_6 <- c(BSE7_6,dt$SNP[1])
+				}
+			if (gen6[6]>minafc){
+				BSE8_6 <- c(BSE8_6,dt$SNP[1])
+				}
+			if (gen6[7]>minafc){
+				BSE9_6 <- c(BSE9_6,dt$SNP[1])
+				}
+			if (gen6[8]>minafc){
+				BSE10_6 <- c(BSE10_6,dt$SNP[1])
+				}
+			if (gen6[9]>minafc){
+				BSE11_6 <- c(BSE11_6,dt$SNP[1])
+				}
+			if (gen6[10]>minafc){
+				BSE12_6 <- c(BSE12_6,dt$SNP[1])
+				}
+			##gen10
+			if (gen10[1]>minafc){
+				BSE3_10 <- c(BSE3_10,dt$SNP[1])
+				}
+			if (gen10[2]>minafc){
+				BSE4_10 <- c(BSE4_10,dt$SNP[1])
+				}
+			if (gen10[3]>minafc){
+				BSE5_10 <- c(BSE5_10,dt$SNP[1])
+				}
+			if (gen10[4]>minafc){
+				BSE6_10 <- c(BSE6_10,dt$SNP[1])
+				}
+			if (gen10[5]>minafc){
+				BSE8_10 <- c(BSE8_10,dt$SNP[1])
+				}
+			if (gen10[6]>minafc){
+				BSE9_10 <- c(BSE9_10,dt$SNP[1])
+				}
+			if (gen10[7]>minafc){
+				BSE11_10 <- c(BSE11_10,dt$SNP[1])
+				}
+			if (gen10[8]>minafc){
+				BSE12_10 <- c(BSE12_10,dt$SNP[1])
+				}
+			}
+
+		gen6_names <- c("BSE3_6","BSE4_6","BSE5_6","BSE6_6","BSE7_6","BSE8_6","BSE9_6","BSE10_6","BSE11_6","BSE12_6")
+		gen10_names <- c("BSE3_10","BSE4_10","BSE5_10","BSE6_10","BSE8_10","BSE9_10","BSE11_10","BSE12_10")
+		gen6_pops <- list(BSE3_6,BSE4_6,BSE5_6,BSE6_6,BSE7_6,BSE8_6,BSE9_6,BSE10_6,BSE11_6,BSE12_6)
+		names(gen6_pops) <- gen6_names
+		gen10_pops <- list(BSE3_10,BSE4_10,BSE5_10,BSE6_10,BSE8_10,BSE9_10,BSE11_10,BSE12_10)
+		names(gen10_pops) <- gen10_names
+
+		gen6_jac <- matrix(nrow = length(gen6_pops), ncol = length(gen6_pops),
+								dimnames = list(c(gen6_names),c(gen6_names)))
+
+		gen10_jac <- matrix(nrow = length(gen10_pops), ncol = length(gen10_pops),
+								dimnames = list(c(gen10_names),c(gen10_names)))
+
+		for (i in 1:10){
+			for (x in 1:10){
+				if (i != x){
+					pop1 <- gen6_names[[i]]
+					pop2 <- gen6_names[[x]]
+					jac <- length(intersect(gen6_pops[[pop1]],gen6_pops[[pop2]])) / length(union(gen6_pops[[pop1]],gen6_pops[[pop2]]))
+					#gen6_jac <- c(gen6_jac,jac)
+					gen6_jac[pop1,pop2] <- jac
+					}
+				}
+			}
+
+
+		for (i in 1:8){
+				for (x in 1:8){
+					if (i != x){
+						pop1 <- gen10_names[[i]]
+						pop2 <- gen10_names[[x]]
+						jac <- length(intersect(gen10_pops[[pop1]],gen10_pops[[pop2]])) / length(union(gen10_pops[[pop1]],gen10_pops[[pop2]]))
+						#gen10_jac <- c(gen10_jac,jac)
+						gen10_jac[pop1,pop2] <- jac
+						}
+					}
+				}
+
+		return(list(gen6_jac[lower.tri(gen6_jac, diag = FALSE)],gen10_jac[lower.tri(gen10_jac, diag = FALSE)]))
+	}
