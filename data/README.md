@@ -44,7 +44,7 @@ The data columns are in the following order:
 | BSE-12-T1 | Treatment line 12, generation 6 |
 | BSE-12-T2 | Treatment line 12, generation 6 |
 
-### wild.genobaypass and wild.snpdet
+### wild.snps and wild.snpdet
 **wild.snps_freq** and **wild.snps_cov** contains SNP frequencies and coverages for every SNP in every wild population,
 generated using R::*poolfstat* and *baypass2freqs_cov.py*  
 **wild.snpdet** contains the reference scaffold and position for every SNP
