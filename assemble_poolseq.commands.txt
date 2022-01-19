@@ -1,0 +1,45 @@
+## Commands to tile pool-seq reads on top of transcriptome and assemble with Trinity in two iterations
+
+# randomly sample 50 million (or more) read pairs from pool-seq files. Required to limit reads based on max memory available during the "extract the 'right' reads step"
+cat *_R1_trimmed.fastq.gz | seqtk sample -s100 - 50000000 > poolSeq50M_R1.fastq
+cat *_R2_trimmed.fastq.gz | seqtk sample -s100 - 50000000 > poolSeq50M_R2.fastq
+
+# fix the read names for Trinity
+awk '{{print (NR%4 == 1) ? "@1_" ++i "/1": $0}}' poolSeq50M_R1.fastq > poolSeq50M_R1.fix.fastq
+awk '{{print (NR%4 == 1) ? "@1_" ++i "/2": $0}}' poolSeq50M_R2.fastq > poolSeq50M_R2.fix.fastq
+
+
+##### Iteration 1 ###########
+# map the 'left' reads to the non-redundant transcriptome
+bwa index Purple.Trinity.highestiso.cdhit95.fasta
+bwa mem -t 8 Purple.Trinity.highestiso.cdhit95.fasta poolSeq50M_R1.fix.fastq | samtools view -@ 8 -q 20 -F 4 -b - | samtools sort -n -@ 8 - | samtools fastq -@ 8 - > mapped_left.1.fastq
+
+# extract the 'right' reads
+python get_mates.py -m mapped_left.1.fastq -r poolSeq50M_R2.fix.fastq -o right_mates.fastq
+
+# run Trinity and cluster
+Trinity --max_memory 50G --seqType fq --left mapped_left.1.fastq --right right_mates.fastq --min_contig_length 200 --CPU 8 --output Iteration_1.trinity --full_cleanup
+cd-hit-est -i Iteration_1.trinity.Trinity.fasta -o Iteration_1.trinity.Trinity.cdhit95.fasta -c 0.95 -n 10
+
+rm right_mates.fastq
+
+##### Iteration 2 ###########
+# map the 'left' reads to the iteration one assembly
+bwa index Iteration_1.trinity.Trinity.cdhit95.fasta
+bwa mem -t 8 Iteration_1.trinity.Trinity.cdhit95.fasta poolSeq50M_R1.fix.fastq | samtools view -@ 8 -q 20 -F 4 -b - | samtools sort -n -@ 8 - | samtools fastq -@ 8 - > mapped_left.2.fastq
+
+# extract the right reads
+python get_mates.py -m mapped_left.2.fastq -r poolSeq50M_R2.fix.fastq -o right_mates.fastq
+
+# run Trinity and cluster
+Trinity --max_memory 50G --seqType fq --left mapped_left.2.fastq --right right_mates.fastq --min_contig_length 200 --CPU 8 --output Iteration_2.trinity --full_cleanup
+cd-hit-est -i Iteration_2.trinity.Trinity.fasta -o Iteration_2.trinity.Trinity.cdhit95.fasta -c 0.95 -n 10
+
+
+##### Extract only contigs that blast to the genome ######
+# blastn to repeat-masked genome
+makeblastdb -in Eaff_11172013.genome.masked.fa -dbtype nucl -parse_seqids
+blastn -db Eaff_11172013.genome.masked.fa -query Iteration_2.trinity.Trinity.cdhit95.fasta -num_threads 8 -evalue 1e-3 -outfmt6 -out Iteration_2.cdhit95.blastn.eaffi5k_masked.outfmt6
+
+# extract contigs with significant hits
+python filter_fasta_by_blast.py -i Iteration_2.trinity.Trinity.cdhit95.fasta -o Iteration_2.trinity.Trinity.cdhit95.filtered.fasta -b Iteration_2.cdhit95.blastn.eaffi5k_masked.outfmt6 -e 1e-3

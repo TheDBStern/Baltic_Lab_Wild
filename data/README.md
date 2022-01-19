@@ -1,10 +1,15 @@
 ## Data description
 
-### lab.genobaypass and lab.snpdet
-**lab.genobaypass** contains read counts for biallelic SNPs in Baypass format
-generated using *poolfstat*\
-**lab.snpdet** contains the reference contig and position for every SNP
-in the *genobaypass* file
+### lab.snps
+**lab.snps_freq** and **lab.snps_cov** contain SNP frequencies and read coverage for every SNP in every laboratory line,
+generated using R::*poolfstat* and *baypass2freqs_cov.py*  
+**lab.snpdet** contains the reference scaffold and position for every SNP
+in the SNP frequency and coverage files
+
+## hap_blocks
+**hap_blocks.freq** and **hap_blocks.cov** contain the frequencies and coverages (based on the median SNP frequency in each haplotype blocks)
+for all 121 haplotype blocks in all  
+**hap_blocks.res.RDS** is an rds file (read into R using readRDS(hap_blocks.res.RDS)) with information for each haplotype block (start and stop position, starting frequency, selection coef., etc.)
 
 The data columns are in the following order:
 
@@ -40,10 +45,10 @@ The data columns are in the following order:
 | BSE-12-T2 | Treatment line 12, generation 6 |
 
 ### wild.genobaypass and wild.snpdet
-**wild.genobaypass** contains read counts for biallelic SNPs in Baypass format
-generated using *poolfstat*\
-**lab.snpdet** contains the reference contig and position for every SNP
-in the *genobaypass* file
+**wild.snps_freq** and **wild.snps_cov** contains SNP frequencies and coverages for every SNP in every wild population,
+generated using R::*poolfstat* and *baypass2freqs_cov.py*  
+**wild.snpdet** contains the reference scaffold and position for every SNP
+in the SNP frequency and coverage files
 
 The data columns are in the following order:
 
@@ -58,7 +63,3 @@ The data columns are in the following order:
 | RG1E | Gulf of Riga 1 |
 | RG2E | Gulf of Riga 2|
 | STE | Stockholm, Sweden |
-
-### lab.all.RDS and lab.sig.RDS
-**lab.all.RDS** is an rds file (read into R using readRDS(lab.all.RDS)) has some test statistics and allele frequencies for all called SNPs 
-**lab.sig.RDS** is an rds file with statistics for just the 1156 significant SNPs

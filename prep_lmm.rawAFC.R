@@ -2,8 +2,8 @@ library(data.table)
 library(dplyr)
 
 # read in data
-genoF <- as.data.table(read.table("hap_blocks.rising.freq", h=F, stringsAsFactors=F))
-genoF$SNP<- 1:nrow(genoF)
+genoF <- as.data.table(read.table("hap_blocks.freq", h=F, stringsAsFactors=F))
+genoF$loc<- 1:nrow(genoF)
 genoF_cov <- as.data.table(read.table("hap_blocks.cov", h=F, stringsAsFactors=F))
 
 ## calculate divergence from ancestor using Kelly and Hughes 2019 angular transformation
@@ -41,7 +41,7 @@ mutate(V28= V28 - Ancestral)
 ## reformat
 setDT(genoF)
 genoF<-select(genoF,3:29)
-MgenoF<-melt(genoF, id.vars ="SNP")
+MgenoF<-melt(genoF, id.vars ="loc")
 MgenoF$variable<-as.character(MgenoF$variable)
 MgenoF$Generation<-rep(NA,nrow(MgenoF))
 MgenoF$Treat<-rep(NA,nrow(MgenoF))
@@ -95,4 +95,4 @@ MgenoF$Beaker <- as.factor(MgenoF$Beaker)
 MgenoF$Treat <- as.factor(MgenoF$Treat)
 MgenoF <- as.data.table(MgenoF)
 
-saveRDS(MgenoF,'hap_blocks.rawAFC.lmm.RDS')
+saveRDS(MgenoF,'hap_blocks.rawAFC.RDS')
