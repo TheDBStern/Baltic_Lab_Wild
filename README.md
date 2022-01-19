@@ -13,7 +13,6 @@ Primary data processing scripts are in the main directory. Command-line options 
 - [baypass2freqs_cov.py](./baypass2freqs_cov.py) Converts a file from multipopulation BayPass format (refcount1 altcount1 etc.) to frequencies of the alt allele and a coverage matrix
 - [calculate_coverage_distribution_sync.py](./calculate_coverage_distribution_sync.py) Calculates the top X percentage of coverage across all pools from a sync file
 - [determine_AFC_cutoff.R](./determine_AFC_cutoff.R) R commands to simulate neutral allele frequency change to determine a cutoff to call an allele an under selection in a given line
-- [Figure_code.R](./Figure_code.R) R code used to generate the main figures of the manuscript. Some of the data files need to be generated using the scripts in this repository
 - [filter_fasta_by_blast.py](./filter_fasta_by_blast.py) Filters a multifasta file based on whether sequences had a significant blast hit to some sequence database or genome
 - [filter_sync_by_snplist.py](./filter_sync_by_snplist.py) Filters a sync file (Popoolation2) by a list of SNPs to keep (e.g. a snpdet file produced by poolfstat)
 - [get_mates.py](./get_mates.py) For a set of left/R1 reads, fetch corresponding right/R2 read pairs
