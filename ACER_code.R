@@ -3,8 +3,8 @@ library(matrixStats)
 library(qvalue)
 library(dplyr)
 
-freqs <- read.table("data/lab.genobaypass_freq")
-covs <- read.table("data/lab.genobaypass_cov")
+freqs <- read.table("data/lab.snps_freq")
+covs <- read.table("data/lab.snps_cov")
 snpdet <- read.table('data/lab.snpdet')
 ########### CMH test #####################
 # collect T0 data

@@ -1,30 +1,29 @@
 # Introduction
 This repository contains analysis scripts and data associated with our manuscript
 
-> Stern DB, Diaz JA, and CE Lee. Parallel polygenic adaptation driven by epistasis in laboratory and wild populations of a Baltic Sea Copepod
+> Stern DB, Diaz JA, and CE Lee. Parallel polygenic adaptation promoted by epistasis in laboratory and wild populations of a Baltic Sea Copepod
 
 ## Usage
 Primary data processing scripts are in the main directory. Command-line options for python scripts can be found, e.g.,
 `baypass2freqs_cov.py -h`
 
+- [ACER_code.R](./ACER_code.R) R commands used to run the Chi-square and CMH tests on SNPs
+- [assemble_poolseq.commands.txt](./assemble_poolseq.commands.txt) Commands used to generate the 'pseudoreference' genome by 'tiling' Pool-seq data onto the transcriptome in an iterative mapping and assembly approach
 - [bams2SNPs.commands.sh](./bams2SNPs.commands.sh) Commands used to call SNPs and generate allele count files
 - [baypass2freqs_cov.py](./baypass2freqs_cov.py) Converts a file from multipopulation BayPass format (refcount1 altcount1 etc.) to frequencies of the alt allele and a coverage matrix
 - [calculate_coverage_distribution_sync.py](./calculate_coverage_distribution_sync.py) Calculates the top X percentage of coverage across all pools from a sync file
+- [determine_AFC_cutoff.R](./determine_AFC_cutoff.R) R commands to simulate neutral allele frequency change to determine a cutoff to call an allele an under selection in a given line
 - [Figure_code.R](./Figure_code.R) R code used to generate the main figures of the manuscript. Some of the data files need to be generated using the scripts in this repository
 - [filter_fasta_by_blast.py](./filter_fasta_by_blast.py) Filters a multifasta file based on whether sequences had a significant blast hit to some sequence database or genome
 - [filter_sync_by_snplist.py](./filter_sync_by_snplist.py) Filters a sync file (Popoolation2) by a list of SNPs to keep (e.g. a snpdet file produced by poolfstat)
-- [get_SNP_position_in_genome.py](./get_SNP_position_in_genome.py) Convert SNP positions called in one reference genome to approximate position in another genome based on blast results
 - [get_mates.py](./get_mates.py) For a set of left/R1 reads, fetch corresponding right/R2 read pairs
+- [get_SNP_position_in_genome.py](./get_SNP_position_in_genome.py) Convert SNP positions called in one reference genome to approximate position in another genome based on blast results
 - [prep_lmm.R](./prep_lmm.R) R code specific to this study for generating the input file to run the lmm analysis of SNP frequency trajectories. Uses the files in the [data](./data) directory
+    * 'prep_lmm.rawAFC.R' - same as above but does not transform the allele frequencies
+    * 'prep_lmm.rawFreqs.R' - same as above but uses raw allele frequencies rather than divergence from the ancestor
 - [run_lmm.R](./run_lmm.R) R script to run the linear mixed model with lme4 on every called SNP. Uses the output from [prep_lmm.R](./prep_lmm.R)
-- [tile_poolseq.commands.sh](./tile_poolseq.commands.sh) Commands used to generate the pseudoreference genome by 'tiling' Pool-seq data onto the transcriptome in an iterative mapping and assembly approach
 - [vcf2genobaypass.R](./vcf2genobaypass.R) R commands to generate the read count file from the VarScan VCF using *poolfstat*
 
-
-Other data wrangling and analysis scripts are in the [extra_scripts](./extra_scripts) directory and contain some limited documentation within.
-
-Functions for calculating parallelism, e.g., Jaccard index are in
-`extra_scripts/parallelism_functions.R`
 
 ## Software required to run these scripts
 - [BLAST 2.7.1+](https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/)
@@ -58,7 +57,6 @@ R version 4.0.4
 - [Bowtie v2.3.5](http://bowtie-bio.sourceforge.net/bowtie2/manual.shtml)
 - [DAVID v6.8](https://david.ncifcrf.gov/)
 - [HMMER v3.2.1](http://hmmer.org/)
-- [MimicrEE2](https://sourceforge.net/p/mimicree2/wiki/Home/)
 - [RSEM v1.3.1](https://deweylab.github.io/RSEM/)
 - [PolygenicAdaptationCode](https://github.com/jjberg2/PolygenicAdaptationCode)
 - [Transdecoder v5.5](https://github.com/TransDecoder/TransDecoder/wiki)
@@ -66,6 +64,6 @@ R version 4.0.4
 - [TreeMix v1.13](https://bitbucket.org/nygcresearch/treemix/wiki/Home)
 
 ## Data
-SNPs and allele counts derived from the Pool-seq data are available in the data directory. Please see the README file within for information.
+SNPs and allele counts derived from the Pool-seq data are available in the [data](./data) directory. Please see the README file within for information.
 
 Please contact the authors for questions or issues.
