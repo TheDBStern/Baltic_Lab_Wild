@@ -6,7 +6,7 @@ generated using R::*poolfstat* and *baypass2freqs_cov.py*
 **lab.snpdet** contains the reference scaffold and position for every SNP
 in the SNP frequency and coverage files
 
-## hap_blocks
+### hap_blocks
 **hap_blocks.freq** and **hap_blocks.cov** contain the frequencies and coverages (based on the median SNP frequency in each haplotype blocks)
 for all 121 haplotype blocks in all  
 **hap_blocks.res.RDS** is an rds file (read into R using readRDS(hap_blocks.res.RDS)) with information for each haplotype block (start and stop position, starting frequency, selection coef., etc.)
