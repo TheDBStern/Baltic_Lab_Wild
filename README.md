@@ -4,7 +4,7 @@ This repository contains analysis scripts and data associated with our manuscrip
 > Stern DB, Diaz JA, and CE Lee. Parallel polygenic adaptation promoted by epistasis in laboratory and wild populations of a Baltic Sea Copepod
 
 ## Usage
-Scripts are organized by either [**snp_calling**](./snp_calling) or [**selection_analyses**](./selection_analyses)
+Scripts are organized by either [**snp_calling**](./snp_calling) or [**selection_analyses**](./selection_analyses)  
 Command-line options for python scripts can be found, e.g.,`baypass2freqs_cov.py -h`
 
 **snp_calling**, i.e., reference assembly, SNP calling, SNP data processing
