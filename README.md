@@ -4,25 +4,28 @@ This repository contains analysis scripts and data associated with our manuscrip
 > Stern DB, Diaz JA, and CE Lee. Parallel polygenic adaptation promoted by epistasis in laboratory and wild populations of a Baltic Sea Copepod
 
 ## Usage
-Primary data processing scripts are in the main directory. Command-line options for python scripts can be found, e.g.,
-`baypass2freqs_cov.py -h`
+Scripts are organized by either [**snp_calling**](./snp_calling) or [**selection_analyses**](./selection_analyses)
+Command-line options for python scripts can be found, e.g.,`baypass2freqs_cov.py -h`
 
-- [ACER_code.R](./ACER_code.R) R commands used to run the Chi-square and CMH tests on SNPs
-- [assemble_poolseq.commands.txt](./assemble_poolseq.commands.txt) Commands used to generate the 'pseudoreference' genome by 'tiling' Pool-seq data onto the transcriptome in an iterative mapping and assembly approach
-- [bams2SNPs.commands.sh](./bams2SNPs.commands.sh) Commands used to call SNPs and generate allele count files
-- [baypass2freqs_cov.py](./baypass2freqs_cov.py) Converts a file from multipopulation BayPass format (refcount1 altcount1 etc.) to frequencies of the alt allele and a coverage matrix
-- [calculate_coverage_distribution_sync.py](./calculate_coverage_distribution_sync.py) Calculates the top X percentage of coverage across all pools from a sync file
-- [determine_AFC_cutoff.R](./determine_AFC_cutoff.R) R commands to simulate neutral allele frequency change to determine a cutoff to call an allele an under selection in a given line
-- [filter_fasta_by_blast.py](./filter_fasta_by_blast.py) Filters a multifasta file based on whether sequences had a significant blast hit to some sequence database or genome
-- [filter_sync_by_snplist.py](./filter_sync_by_snplist.py) Filters a sync file (Popoolation2) by a list of SNPs to keep (e.g. a snpdet file produced by poolfstat)
-- [get_mates.py](./get_mates.py) For a set of left/R1 reads, fetch corresponding right/R2 read pairs
-- [get_SNP_position_in_genome.py](./get_SNP_position_in_genome.py) Convert SNP positions called in one reference genome to approximate position in another genome based on blast results
-- [prep_lmm.R](./prep_lmm.R) R code specific to this study for generating the input file to run the lmm analysis of SNP frequency trajectories. Uses the files in the [data](./data) directory
+**snp_calling**, i.e., reference assembly, SNP calling, SNP data processing
+- [assemble_poolseq.commands.txt](./snp_calling/assemble_poolseq.commands.txt) Commands used to generate the 'pseudoreference' genome by 'tiling' Pool-seq data onto the transcriptome in an iterative mapping and assembly approach
+- [baypass2freqs_cov.py](./snp_calling/baypass2freqs_cov.py) Converts a file from multipopulation BayPass format (refcount1 altcount1 etc.) to frequencies of the alt allele and a coverage matrix
+- [bams2SNPs.commands.sh](./snp_calling/bams2SNPs.commands.sh) Commands used to call SNPs and generate allele count files
+- [calculate_coverage_distribution_sync.py](./snp_calling/calculate_coverage_distribution_sync.py) Calculates the top X percentage of coverage across all pools from a sync file
+- [filter_fasta_by_blast.py](./snp_calling/filter_fasta_by_blast.py) Filters a multifasta file based on whether sequences had a significant blast hit to some sequence database or genome
+- [filter_sync_by_snplist.py](./snp_calling/filter_sync_by_snplist.py) Filters a sync file (Popoolation2) by a list of SNPs to keep (e.g. a snpdet file produced by poolfstat)
+- [get_mates.py](./snp_calling/get_mates.py) For a set of left/R1 reads, fetch corresponding right/R2 read pairs
+- [get_SNP_position_in_genome.py](./snp_calling/get_SNP_position_in_genome.py) Convert SNP positions called in one reference genome to approximate position in another genome based on blast results
+- [vcf2genobaypass.R](./snp_calling/vcf2genobaypass.R) R commands to generate the read count file from the VarScan VCF using *poolfstat*
+
+**selection_analyses**, i.e., running the CMH, Chi-square, & LMM tests, calculating Jaccard index
+- [ACER_code.R](./selection_analyses/ACER_code.R) R commands used to run the Chi-square and CMH tests on SNPs
+- [determine_AFC_cutoff.R](./selection_analyses/determine_AFC_cutoff.R) R commands to simulate neutral allele frequency change to determine a cutoff to call an allele an under selection in a given line
+- [parallelism_functions.R](./selection_analyses/parallelism_functions.R) R functions to calculate the Jaccard index and RFS for the empirical data
+- [prep_lmm.R](./selection_analyses/prep_lmm.R) R code specific to this study for generating the input file to run the lmm analysis of SNP frequency trajectories. Uses the files in the [data](./data) directory
     * 'prep_lmm.rawAFC.R' - same as above but does not transform the allele frequencies
     * 'prep_lmm.rawFreqs.R' - same as above but uses raw allele frequencies rather than divergence from the ancestor
-- [run_lmm.R](./run_lmm.R) R script to run the linear mixed model with lme4 on every called SNP. Uses the output from [prep_lmm.R](./prep_lmm.R)
-- [vcf2genobaypass.R](./vcf2genobaypass.R) R commands to generate the read count file from the VarScan VCF using *poolfstat*
-
+- [run_lmm.R](./selection_analyses/run_lmm.R) R script to run the linear mixed model with lme4 on every called SNP. Uses the output from [prep_lmm.R](./prep_lmm.R)
 
 ## Software required to run these scripts
 - [BLAST 2.7.1+](https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/)
