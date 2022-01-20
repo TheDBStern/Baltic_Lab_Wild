@@ -18,7 +18,7 @@ Command-line options for python scripts can be found, e.g.,`baypass2freqs_cov.py
 - [get_SNP_position_in_genome.py](./snp_calling/get_SNP_position_in_genome.py) Convert SNP positions called in one reference genome to approximate position in another genome based on blast results
 - [vcf2genobaypass.R](./snp_calling/vcf2genobaypass.R) R commands to generate the read count file from the VarScan VCF using *poolfstat*
 
-**selection_analyses**, i.e., running the CMH, Chi-square, & LMM tests, calculating Jaccard index
+**selection_analyses**, i.e., CMH, Chi-square, & LMM tests, calculating Jaccard index
 - [ACER_code.R](./selection_analyses/ACER_code.R) R commands used to run the Chi-square and CMH tests on SNPs
 - [determine_AFC_cutoff.R](./selection_analyses/determine_AFC_cutoff.R) R commands to simulate neutral allele frequency change to determine a cutoff to call an allele an under selection in a given line
 - [parallelism_functions.R](./selection_analyses/parallelism_functions.R) R functions to calculate the Jaccard index and RFS for the empirical data
@@ -58,6 +58,7 @@ R version 4.0.4
 - [BEDOPS v2.4.39](https://bedops.readthedocs.io/en/latest/)
 - [Bowtie v2.3.5](http://bowtie-bio.sourceforge.net/bowtie2/manual.shtml)
 - [DAVID v6.8](https://david.ncifcrf.gov/)
+- [haplovalidate v0.1.4](https://github.com/kathrinannaotte/haplovalidate)
 - [HMMER v3.2.1](http://hmmer.org/)
 - [RSEM v1.3.1](https://deweylab.github.io/RSEM/)
 - [PolygenicAdaptationCode](https://github.com/jjberg2/PolygenicAdaptationCode)
