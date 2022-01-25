@@ -1,0 +1,295 @@
+function (void)MakeOutput(void) {
+	results = sim.getValue("results");
+	catn(c("Gen,", "Pop,", "Loci" + 1:nloci + ","));
+	for(i in 0:(nrow(results)-1)) {
+		catn(paste(results[i,], sep = ", "));
+	}
+}
+
+////////////////////////////
+
+function (void)InitializeFreqArray(void) {
+	results = array(rep(0.0, (3*npops)*(nloci + 2)),dim = c(3*npops, nloci + 2));
+	gencol = c(rep(0, npops), rep(6, npops), rep(10, npops));
+	popcol = rep(1:npops, 3);
+	results[,0] = gencol;
+	results[,1] = popcol;
+	sim.setValue("results", results);
+}
+
+////////////////////////////
+
+function (void)SaveVals(void) {
+	results = sim.getValue("results");
+	cov = sim.getValue("cov");
+	gen = sim.generation;
+	if(gen == 1) mult = 0;
+	if(gen == 7) mult = 1;
+	if(gen == 11) mult = 2;
+	
+	for(pop in 0:(npops-1)) {
+		indsample = sim.subpopulations[pop].individuals[sample(0:(popsize - 1), 100)];
+		for(pos in 0:(nloci-1)) {
+			covsample = indsample.genomes[sample(0:199, cov[pos])];
+			results[(mult * npops + pop),(pos + 2)] = sum(covsample.mutations.position == pos) / cov[pos];
+		}
+	}
+	
+	sim.setValue("results", results);
+}
+
+
+////////////////////////////
+
+function (void)SetUpStartingPops(void) {
+	T0 = sim.getValue("T0");
+	selcoef = sim.getValue("selcoef");
+	
+	genomes = sim.subpopulations.genomes;
+	for(pos in 0:(nloci-1)){
+		genomes[which(rbinom(length(genomes),1,T0[pos])==1)].addNewMutation(m1,selcoef[pos],pos);
+	}
+	maxpolygenicscore = 2 * sum(selcoef[0:(nloci-1)]);
+	sim.setValue("maxpolygenicscore", maxpolygenicscore);
+}
+
+
+////////////////////////////
+
+function (void)ReadLog(void) {
+//	lines = readFile("/home/nathan/Documents/GitHub/EpistasisSim/EmpT0hb/sortedhbdata.csv");
+	//	lines = readFile("/media/lee/HDD_Array/nwanderson/EpistasisSim/EmpT0snps/selected_snps.info.txt");
+	lines = readFile("./sortedhbdata.csv");
+	lines = lines[substr(lines, 0, 1) != "//"];
+	chr = c();
+//	pos = c();
+	haplotype_block= c();
+	T0= c();
+	selcoef = c();
+	cov = c();
+	for (line in lines[1:(length(lines) - 1)]){
+		fields = strsplit(line, ",");
+		
+		chr = c(chr, fields[1]);
+//		pos = c(pos, asInteger(fields[2]));
+		haplotype_block = c(haplotype_block, fields[4]);
+		T0 = c(T0, asFloat(fields[5]));
+		selcoef = c(selcoef, asFloat(fields[6]));
+		cov = c(cov, asInteger(fields[7]));
+	}
+	selcoef = abs(selcoef);
+	sim.setValue("chr",chr);
+//	sim.setValue("pos",pos);
+	sim.setValue("haplotype_block",haplotype_block);
+	sim.setValue("T0", T0);
+	sim.setValue("selcoef", selcoef);
+	sim.setValue("cov", cov);
+}
+
+
+////////////////////////////
+
+function (void)GetFits(void) {
+	maxpolygenicscore = sim.getValue("maxpolygenicscore");
+	inds = sim.subpopulations.individuals;
+	polygenicscore = inds.sumOfMutationsOfType(m1);
+	polygenicscore = polygenicscore / maxpolygenicscore;
+	
+	if(fitnessFunction == "directional" | fitnessFunction == 3) {
+		inds.fitnessScaling = fmin + ((fmax - fmin) / ((1 + s * exp(r *	(polygenicscore + b))) ^(1/s)));
+	}
+	
+	if(fitnessFunction == "diminishingReturns" | fitnessFunction == 4) {
+		tmp = fmin + (fmax - fmin) * (1 - 1 / exp(a * (polygenicscore + b)));
+		tmp[tmp < 0.0] = 0.0;
+		inds.fitnessScaling = tmp;
+	}
+	
+	if(fitnessFunction == "exponential" | fitnessFunction == 1) {
+		inds.fitnessScaling = exp(a * (polygenicscore)^2);
+	}
+	
+	if(fitnessFunction == "stabilizing" | fitnessFunction == 5) {
+		inds.fitnessScaling = exp(-0.5 * ((polygenicscore - mu)^2 / std ^ 2));
+	}
+	
+	if(sim.generation == 1) {
+		pgsarray = array(rep(0.0, 3 * npops * popsize), c(3, npops * popsize));
+		fitarray = array(rep(0.0, 3 * npops * popsize), c(3, npops * popsize));
+		pgsarray[0,] = polygenicscore;
+		fitarray[0,] = inds.fitnessScaling;
+		sim.setValue("pgsarray", pgsarray);
+		sim.setValue('fitarray', fitarray);
+		//		catn("Gen0:");
+		//		catn(quantile(polygenicscore, c(0.025,0.975)));
+		//		catn(quantile(polygenicscore));
+	}
+	if(sim.generation == 7) {
+		pgsarray = sim.getValue("pgsarray");
+		fitarray = sim.getValue('fitarray');
+		pgsarray[1,] = polygenicscore;
+		fitarray[1,] = inds.fitnessScaling;
+		sim.setValue("pgsarray", pgsarray);
+		sim.setValue('fitarray', fitarray);
+	
+	}
+	if(sim.generation == 11) {
+		pgsarray = sim.getValue("pgsarray");
+		fitarray = sim.getValue('fitarray');
+		pgsarray[2,] = polygenicscore;
+		fitarray[2,] = inds.fitnessScaling;
+		sim.setValue("pgsarray", pgsarray);
+		sim.setValue('fitarray', fitarray);
+		//		catn("Gen10:");
+		//		catn(quantile(polygenicscore, c(0.025,0.975)));
+		//		catn(quantile(polygenicscore));
+	}
+}
+
+////////////////////////////
+
+function (void)MakePlot(void) {
+	pgsarray = sim.getValue("pgsarray");
+	fitarray = sim.getValue('fitarray');
+	x = 0:200 / 200;
+	if(fitnessFunction == "directional" | fitnessFunction == 3) {
+		y = fmin + ((fmax - fmin) / ((1 + s * exp(r *	(x + b))) ^(1/s)));
+	}
+	
+	if(fitnessFunction == "diminishingReturns" | fitnessFunction == 4) {
+		y = fmin + (fmax - fmin) * (1 - 1 / exp(a * (x + b)));
+		y[y < 0.0] = 0.0;
+	}
+	
+	if(fitnessFunction == "exponential"  | fitnessFunction == 1) {
+		y = exp(a * (x^2));
+	}
+	
+	if(fitnessFunction == "stabilizing" | fitnessFunction == 5) {
+		y = exp(-0.5 * ((x - mu)^2 / std ^ 2));
+	}
+	
+	
+	
+	rstr = paste('{',
+		'pgsgen0 <- c(' + paste(pgsarray[0,], sep = ", ") + ')',
+		'pgsgen6 <- c(' + paste(pgsarray[1,], sep = ", ") + ')',
+		'pgsgen10 <- c(' + paste(pgsarray[2,], sep = ", ") + ')',
+		'x <- c(' + paste(x, sep = ", ") + ')',
+		'y <- c(' + paste(y, sep = ", ") + ')',
+		'png(width=12, height=18, units="in", res=72, file="' + pngPath + '")',
+		'par(mar=c(4.0, 4.0, 1.5, 1.5), mfrow = c(2,1))',
+		'plot(x = density(pgsgen0)$x, y = density(pgsgen0)$y / max(density(pgsgen0)$y), col = "red", xlim = c(0,1), ylim = c(0,1), type = "l")',
+		'lines(x = density(pgsgen6)$x, y = density(pgsgen6)$y / max(density(pgsgen6)$y), col = "green")',
+		'lines(x = density(pgsgen10)$x, y = density(pgsgen10)$y / max(density(pgsgen10)$y), col = "blue")',
+		'lines(x = x, y = y)',
+		///////////////////////////
+		'fitgen0 <- c(' + paste(fitarray[0,], sep = ", ") + ')',
+		'fitgen6 <- c(' + paste(fitarray[1,], sep = ", ") + ')',
+		'fitgen10 <- c(' + paste(fitarray[2,], sep = ", ") + ')',
+		'plot(density(fitgen0), xlim = c(min(density(fitgen0)$x), max(density(fitgen10)$x)), col = "red")',
+		'lines(density(fitgen6), col = "green")',
+		'lines(density(fitgen10), col = "blue")',
+		'box()',
+		'dev.off()',
+		'}', sep="\n");
+	
+	scriptPath = writeTempFile("plot_", ".R", rstr);
+	system(RSCRIPT, args=scriptPath);
+	deleteFile(scriptPath);
+}
+
+initialize() {
+	setSeed(seed);
+//	defineGlobal("npops",10);
+//	defineGlobal("nloci", 121);
+//	defineGlobal("popsize", 1750);
+//	defineGlobal("fitnessFunction", "exponential");
+//	defineGlobal("fmin",0);
+//	defineGlobal("fmax",1);
+//	defineGlobal("s",0.1);
+//	defineGlobal("r",-75);
+//	defineGlobal("a",8);
+//	defineGlobal("b", -0.395);
+//	defineGlobal("mu", 0.435);
+//	defineGlobal("std", 0.0175);
+	
+	initializeMutationRate(0);
+	
+	initializeMutationType("m1", 0.5, "f", 0.0);
+	
+	initializeGenomicElementType("g1", m1, 1.0);
+	
+	initializeGenomicElement(g1, 0, (nloci - 1));
+	
+	//	initializeRecombinationRate(LoadRecomMap(), 1:(nloci-1));
+	initializeRecombinationRate(0.5);
+	
+	// initializing a path to R for running liveplotting	
+	//	if (fileExists("/usr/bin/Rscript"))
+	//		defineConstant("RSCRIPT", "/usr/bin/Rscript");
+	//	else if (fileExists("/usr/local/bin/Rscript"))
+	//		defineConstant("RSCRIPT", "/usr/local/bin/Rscript");
+	//	else
+	//		stop("Couldn't find Rscript.");
+}
+
+
+
+
+fitness(m1) {
+	if(fitnessFunction == "diminishingReturns" | fitnessFunction == "directional" | fitnessFunction == "stabilizing" |
+		fitnessFunction == 3 | fitnessFunction == 4 | fitnessFunction == 5) {
+		return 1.0;
+	} else {
+		return relFitness;
+	}
+}
+
+
+
+
+1 late() {
+	sim.addSubpop("p1", popsize);
+	sim.addSubpop("p2", popsize);
+	sim.addSubpop("p3", popsize);
+	sim.addSubpop("p4", popsize);
+	sim.addSubpop("p5", popsize);
+	sim.addSubpop("p6", popsize);
+	sim.addSubpop("p7", popsize);
+	sim.addSubpop("p8", popsize);
+	sim.addSubpop("p9", popsize);
+	sim.addSubpop("p10", popsize);
+	
+	ReadLog();
+	SetUpStartingPops();
+	InitializeFreqArray();
+	
+	// getting ready for liveplotting
+	defineConstant("pngPath", writeTempFile("plot_", ".png", ""));
+	if (exists("slimgui"))
+		slimgui.openDocument(pngPath);
+}
+
+
+
+1: late() {
+	GetFits();
+	//	MakePlot();
+}
+
+
+
+1 late() {
+	SaveVals();
+}
+
+7 late() {
+	SaveVals();
+}
+
+11 late() {
+	SaveVals();
+	//	MakePlot();
+	MakeOutput();
+}

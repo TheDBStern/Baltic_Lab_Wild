@@ -4,10 +4,10 @@ This repository contains analysis scripts and data associated with our manuscrip
 > Stern DB, Anderson NW, Diaz JA, and CE Lee. Parallel polygenic adaptation promoted by epistasis in laboratory and wild populations of a Baltic Sea Copepod
 
 ## Usage
-Scripts are organized by either [**snp_calling**](./snp_calling) or [**selection_analyses**](./selection_analyses)  
+Scripts are organized by [**snp_calling**](./snp_calling), [**selection_analyses**](./selection_analyses) and [**simulations**](./simulations)
 Command-line options for python scripts can be found, e.g.,`baypass2freqs_cov.py -h`
 
-**snp_calling**, i.e., reference assembly, SNP calling, SNP data processing
+**snp_calling**, -- reference assembly, SNP calling, SNP data processing
 - [assemble_poolseq.commands.txt](./snp_calling/assemble_poolseq.commands.txt) Commands used to generate the 'pseudoreference' genome by 'tiling' Pool-seq data onto the transcriptome in an iterative mapping and assembly approach
 - [baypass2freqs_cov.py](./snp_calling/baypass2freqs_cov.py) Converts a file from multipopulation BayPass format (refcount1 altcount1 etc.) to frequencies of the alt allele and a coverage matrix
 - [bams2SNPs.commands.sh](./snp_calling/bams2SNPs.commands.sh) Commands used to call SNPs and generate allele count files
@@ -18,7 +18,7 @@ Command-line options for python scripts can be found, e.g.,`baypass2freqs_cov.py
 - [get_SNP_position_in_genome.py](./snp_calling/get_SNP_position_in_genome.py) Convert SNP positions called in one reference genome to approximate position in another genome based on blast results
 - [vcf2genobaypass.R](./snp_calling/vcf2genobaypass.R) R commands to generate the read count file from the VarScan VCF using *poolfstat*
 
-**selection_analyses**, i.e., CMH, Chi-square, & LMM tests, calculating Jaccard index
+**selection_analyses**, -- CMH, Chi-square, & LMM tests, calculating Jaccard index
 - [ACER_code.R](./selection_analyses/ACER_code.R) R commands used to run the Chi-square and CMH tests on SNPs
 - [determine_AFC_cutoff.R](./selection_analyses/determine_AFC_cutoff.R) R commands to simulate neutral allele frequency change to determine a cutoff to call an allele an under selection in a given line
 - [parallelism_functions.R](./selection_analyses/parallelism_functions.R) R functions to calculate the Jaccard index and RFS for the empirical data
@@ -26,6 +26,13 @@ Command-line options for python scripts can be found, e.g.,`baypass2freqs_cov.py
     * 'prep_lmm.rawAFC.R' - same as above but does not transform the allele frequencies
     * 'prep_lmm.rawFreqs.R' - same as above but uses raw allele frequencies rather than divergence from the ancestor
 - [run_lmm.R](./selection_analyses/run_lmm.R) R script to run the linear mixed model with lme4 on every called SNP. Uses the output from [prep_lmm.R](./prep_lmm.R)
+
+**simulations**, -- SLiM script and commands for running epistasis simulations using our empirical parameters  
+See README.md file
+- [epistasis_simulations.slim](./simulations/epistasis_simulations.slim) -- SLiM script to run the simulations. Contains the fitness functions used in the study.    
+- [run_slim.sh](./simulations/run_slim.sh) -- Command to execute the SLiM script. Parameter values are set in the command line.  
+- [sortedhbdata.csv](./simulations/sortedhbdata.csv) -- Data from the 121 selected alleles (haplotype blocks) used in the simulations.  
+Additional information and simulation scenarios can be found [here](https://github.com/NW-Anderson/EpistasisSim)
 
 ## Software required to run these scripts
 - [BLAST 2.7.1+](https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/)
