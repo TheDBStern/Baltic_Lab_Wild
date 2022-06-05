@@ -1,3 +1,6 @@
+[![DOI](https://zenodo.org/badge/194154875.svg)](https://zenodo.org/badge/latestdoi/194154875)
+
+
 # Introduction
 This repository contains analysis scripts and data associated with our manuscript
 
