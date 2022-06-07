@@ -4,7 +4,8 @@
 # Introduction
 This repository contains analysis scripts and data associated with our manuscript
 
-> Stern DB, Anderson NW, Diaz JA, and CE Lee. Parallel polygenic adaptation promoted by epistasis in laboratory and wild populations of a Baltic Sea Copepod
+> Stern DB, Anderson NW, Diaz JA, and CE Lee. Genome-wide signatures of synergistic epistasis during parallel adaptation in a Baltic Sea copepod
+
 
 ## Usage
 Scripts are organized by [**snp_calling**](./snp_calling), [**selection_analyses**](./selection_analyses) and [**simulations**](./simulations)  
